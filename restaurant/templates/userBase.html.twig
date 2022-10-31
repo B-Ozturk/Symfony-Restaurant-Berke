@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurant Berke</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body id="bdy">
+
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ path('user_home') }}">
+                <img class="navLogo" src="/img/logo1.jpg" alt="Restaurant Berke">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="{{ path('user_home') }}"><i class="fa-sharp fa-solid fa-house"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" href="{{ path('user_bestellen') }}"><i class="fa-sharp fa-solid fa-truck-fast"></i>Bestellen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" href="{{ path('user_reserveren') }}"><i class="fa-solid fa-clock"></i>Reserveren</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" href="{{ path('user_review') }}"><i class="fa-sharp fa-solid fa-star"></i>Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" href="{{ path('user_cart') }}"><i class="fa-sharp fa-solid fa-cart-shopping"></i>Winkelwagen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" tabindex="-1" href="/logout"><i class="fa-solid fa-user-slash"></i>Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+{# end of container with navbar#}
+
+<div class="container-fluid">
+    <div class="jumbotron jumbotron-fluid" id="banner"></div>
+
+    <div class="jumbotron jumbotron-fluid bg-danger" id="statisticBanner"></div>
+</div>
+
+{% block body %}{% endblock %}
+</body>
+</html>

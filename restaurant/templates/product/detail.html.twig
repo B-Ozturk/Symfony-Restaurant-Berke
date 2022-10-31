@@ -1,0 +1,39 @@
+{% extends 'userBase.html.twig' %}
+
+{% block body %}
+{#    <center>#}
+    <div class="container">
+        <div class="row mt-3 mb-4">
+            <div class="symfony_product_detail">
+                <div class="col-md-4">
+                    <img src="../../img/menu/{{ menu.picture }}" alt="{{ menu.name }}" class="img-fluid rounded border border-dark" width="600" height="400">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="mt-4 mt-md-0">{{ menu.name }}</h1>
+                    <h2>{{ menu.price }} €</h2>
+                    <hr>
+                    <b>Description: </b>{{ menu.description }}
+                    <div class="symfony_product_detail_form">
+                        {{ form_start(form, {'attr': {'class': 'mt-4 p-4 symfony_product_detail_form'}}) }}
+                        <div class="form-group">
+                            {{ form_label(form.quantity) }}
+                            {{ form_widget(form.quantity, {
+                                'attr': {
+                                    'class': 'form-control ' ~ (form.quantity.vars.valid ? '' : 'is-invalid')
+                                }
+                            }) }}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.quantity) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn detail_button" type="submit" value="Voeg toe">
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{#    </center>#}
+{% endblock %}
