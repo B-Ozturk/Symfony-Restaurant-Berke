@@ -1,0 +1,76 @@
+{% extends "base.html.twig" %}
+{% block title %} TST {% endblock %}
+{#{% form_theme form 'bootstrap_5_layout.html.twig' %}#}
+{% block body %}
+    <div class="container contact_page">
+        <h2 class="text-center" id="contactTitle">Over onze vestiging</h2><br>
+
+        <center>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d365.32690235341954!2d4.130376116841962!3d51.97741317251527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5ad1c75e477c5%3A0x34ccd886bee3252d!2sBakkerij%20Marathon!5e0!3m2!1snl!2snl!4v1664194619340!5m2!1snl!2snl"
+                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><br>
+        </center><br>
+
+        <div class="row" id="contactInfo">
+            <div class="col-md-6">
+                <p class="text_info">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lobortis,
+                    ante quis lacinia eleifend, odio lacus dignissim purus, luctus finibus
+                    arcu elit eget orci. Ut quis vestibulum leo. Nullam quis sem lectus.
+                    Fusce finibus sit amet metus nec venenatis. Maecenas at volutpat tortor,
+                    at sollicitudin neque. Nunc elementum in dolor at pulvinar. Donec eget
+                    vulputate nunc, sit amet tincidunt ligula. Vestibulum hendrerit consequat
+                    leo. Morbi mi ligula, pulvinar at nisl in, efficitur ullamcorper quam.
+                    Donec ullamcorper purus neque, quis feugiat orci laoreet a. Sed sollicitudin
+                    vehicula interdum. Integer consectetur tortor ipsum, eget tempor velit varius
+                    bibendum. Sed feugiat eros metus, ultricies accumsan nisi pharetra sed. Nam
+                    auctor venenatis augue quis dignissim. In ac ligula faucibus, laoreet ante ac,
+                    laoreet lectus. Quisque nisl tellus, tincidunt vel sodales vel, blandit eu nunc.
+                    Nullam faucibus justo leo. Fusce mattis finibus nulla. In mauris lacus, volutpat
+                    porttitor leo accumsan, interdum mollis ipsum. Quisque ac ipsum libero. Nullam
+                    ornare, nisl a fringilla ornare, purus arcu porta elit, in fermentum sapien nunc
+                    eu massa. Morbi vitae fringilla nisi.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <center>
+                    <table id="openingsTijdenTabel">
+                        <tr>
+                            <th>Dag</th>
+                            <th>Tijd</th>
+                        </tr>
+                        {% for info in openingstijden %}
+                        <tr>
+                            <td>{{ info.day }}</td>
+                            <td>{{ info.time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </center>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 ">
+                    {{ form_start(our_form) }}
+                        <div class="symfony_form">
+                            <h5 class="text-center">
+                                Vragen? Of wil je iets kwijt aan ons vul dan het formulier hieronder in.
+                            </h5>
+                            <div class="form-group">
+                                {{ form_row(our_form.name) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(our_form.email) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(our_form.message) }}
+                            </div>
+                            <div class="form-group">
+                                <input class="btn" type="submit" value="Send">
+                            </div>
+                        </div>
+                    {{ form_end(our_form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

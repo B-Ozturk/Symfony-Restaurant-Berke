@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}Register{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(registrationForm) }}
+                <div class="symfony_registration_form">
+                    <h1 class="text-center">Registreer</h1>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.name) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(registrationForm.agreeTerms) }}
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

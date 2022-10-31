@@ -1,0 +1,298 @@
+#bdy{
+    background-color: #b7b7b7;
+    overflow: initial;
+}
+
+/* Navbar css */
+.navbar{
+    background-color: #0B345A;
+}
+
+.navLogo{
+    width: 100px;
+    height: 100px;
+}
+
+.nav-item{
+    font-weight: normal;
+}
+
+.nav-item:hover{
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+/* Jumbotron css */
+#banner{
+    background-image: url("/img/tr_banner.jpg");
+    height: 350px;
+    background-position: top;
+    margin-bottom: -0px;
+}
+
+#statisticBanner{
+    padding-top: 100px;
+}
+
+/* Homepage css */
+#main{
+    font-family: monospace;
+    background-color: #cecece;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 3px black;
+}
+
+#clock{
+    font-family: monospace;
+}
+
+/* Review css */
+.card{
+    border: 2px solid black;
+    box-shadow: 2px 4px black;
+    border-radius: 15px;
+}
+
+/* Contactpage css*/
+.contact_page{
+    font-weight: bold;
+}
+
+#contactTitle{
+    margin-bottom: 10px;
+}
+
+iframe{
+    border: 2px solid black;
+    border-radius: 15px;
+    box-shadow: 2px 4px;
+    width: 100%;
+    height: 60%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.text_info{
+    background-color: #cecece;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 3px black;
+}
+
+table,tr,td{
+    background-color: #c4c4c4;
+    box-shadow: 2px 4px;
+    border-collapse: collapse;
+    border: 2px solid #000000;;
+    margin-bottom: 20px;
+    align-content: flex-end;
+}
+
+.symfony_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_form .form-group > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.symfony_form > h5{
+    font-weight: bold;
+}
+
+.form-group{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+
+input{
+    background-color: #eeeeee;
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 600px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+
+textarea{
+    background-color: #eeeeee;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 600px;
+    height: 70px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+
+.required{
+    align-content: flex-start;
+}
+
+input[type=submit]{
+    border-radius: 50px;
+    border: 2px solid black;
+    background-color: #258afd;
+    font-weight: bold;
+    width: 20%;
+}
+
+/* Login pagina  CSS*/
+.symfony_login_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_login_form > input[type=email]{
+    background-color: #eeeeee;
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 600px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+
+.symfony_login_form > input[type=password]{
+    background-color: #eeeeee;
+    border-radius: 10px;
+    border: 2px solid black;
+    width: 600px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+.symfony_login_form > .form-group > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Registration form*/
+.symfony_registration_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_registration_form .form-group > label{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+
+/* User Bestellen detail pagina css*/
+.symfony_product_detail{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.symfony_product_detail_form{
+    background-color: #dedede;
+}
+
+.symfony_product_detail_form div[type=submit]{
+    border-radius: 50px;
+    border: 2px solid black;
+    background-color: #258afd;
+    font-weight: bold;
+    width: 25%;
+}
+
+/* User Reservation pagina CSS */
+.symfony_reservation_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_reservation_form .form-group {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.symfony_reservation_form .form-group > select {
+    background-color: #eeeeee;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.symfony_reservation_form input[type=submit]{
+    border-radius: 50px;
+    border: 2px solid black;
+    background-color: #258afd;
+    font-weight: bold;
+    width: 20%;
+}
+
+/* User review pagina CSS */
+.symfony_review_form ::marker{
+    color: #ff0000;
+    background-color: #258afd;
+}
+
+.symfony_review_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_review_form > textarea{
+    background-color: #eeeeee;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 600px;
+    height: 70px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+
+.symfony_review_form > h5{
+    font-weight: bold;
+}
+
+.symfony_review_form .form-group > div {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
