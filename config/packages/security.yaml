@@ -1,10 +1,7 @@
 security:
-  enable_authenticator_manager: true
   # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
     Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    App\Entity\Admin:
-      algorithm: auto
   # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
     # used to reload user from session & other features (e.g. switch_user)
@@ -15,20 +12,22 @@ security:
     # used to reload user from session & other features (e.g. switch_user)
     # used to reload user from session & other features (e.g. switch_user)
   firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
     # 'main' is the name of the firewall (can be chosen freely)
     main:
       provider: app_user_provider
-      custom_authenticator: App\Security\LoginFormAuthenticator
       lazy: true
+      form_login:
+        login_path: app_login
+        check_path: app_login
+
       # 'pattern' is a regular expression matched against the incoming
       # request URL. If there's a match, authentication is triggered
       logout:
         path: app_logout
         target: /
         invalidate_session: true
+      custom_authenticator: App\Security\LoginAuthenticator
+      entry_point: form_login
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/user, roles: ROLE_USER }

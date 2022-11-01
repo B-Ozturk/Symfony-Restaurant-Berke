@@ -29,7 +29,7 @@ class CartController extends AbstractController
             return $this->redirectToRoute('cart');
         }
 
-        return $this->render('cart/home.html.twig', [
+        return $this->render('cart/index.html.twig', [
             'cart' => $cart,
             'form' => $form->createView()
         ]);

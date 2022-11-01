@@ -1,0 +1,31 @@
+{% extends 'userBase.html.twig' %}
+{%  block title %}Reserveren | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(reservation_form) }}
+                <div class="symfony_reservation_form">
+                    <h3 class="text-center">
+                        Reserveren
+                    </h3>
+                    <div class="form-group">
+                        <div class="form-group">
+                            {{ form_row(reservation_form.persons) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(reservation_form.day) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(reservation_form.time) }}
+                        </div>
+                        <div class="form-group">
+                            <input class="btn" type="submit" value="Send">
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(reservation_form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
