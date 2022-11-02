@@ -47,8 +47,18 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
+//        in_array("ROLE_ADMIN", $token->getUser()->getRoles());
+
+        if (in_array("ROLE_ADMIN", $token->getUser()->getRoles())){
+//            If the user has a ROLE_ADMIN it will be redirected to the admin home page
+            return new RedirectResponse($this->urlGenerator->generate('admin_home'));
+        } else{
+//            If the user has a ROLE_USER  it will be redirected to the user home page
+            return new RedirectResponse($this->urlGenerator->generate('user_home'));
+        }
+
         // For example:
-         return new RedirectResponse($this->urlGenerator->generate('admin_home'));
+//         return new RedirectResponse($this->urlGenerator->generate('admin_home'));
 //        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
