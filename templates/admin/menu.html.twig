@@ -3,11 +3,10 @@
 {% block body %}
     <div class="container">
         <h1 class="text-center">Menu</h1>
-{#        <div class="row">#}
-            <center>
-                <a href="#" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
-            </center>
-{#        </div>#}
+        <center>
+            <a href="{{ path('admin_addItem') }}" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
+        </center>
+
         <div class="row">
             {% for menu in menus %}
                 <div class="col-md-4">
