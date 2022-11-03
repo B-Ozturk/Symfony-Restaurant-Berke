@@ -1,4 +1,4 @@
-link = "https://api.openweathermap.org/data/2.5/weather?q=amsterdam&units=metric&apikey=dc989810ec5879216998f7685d8d2057";
+link = "https://api.openweathermap.org/data/2.5/weather?q=den haag&units=metric&apikey=dc989810ec5879216998f7685d8d2057";
 let request = new XMLHttpRequest();
 request.open('GET',link,true);
 request.onload = function(){

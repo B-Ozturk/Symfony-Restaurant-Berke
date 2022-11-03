@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,16 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/home.html.twig', [
             'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/menu', name: 'menu')]
+    public function menu(MenuRepository $MenuRepository): Response
+    {
+        $menus = $MenuRepository->findAll();
+
+        return $this->render('admin/menu.html.twig', [
+            'menus' => $menus,
         ]);
     }
 }

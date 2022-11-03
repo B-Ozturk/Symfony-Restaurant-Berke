@@ -1,0 +1,30 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Menu | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Menu</h1>
+{#        <div class="row">#}
+            <center>
+                <a href="#" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
+            </center>
+{#        </div>#}
+        <div class="row">
+            {% for menu in menus %}
+                <div class="col-md-4">
+                    <div class="card mb-4 border-dark">
+                        <img src="../img/menu/{{ menu.picture }}" alt="{{ menu.name }}" class="card-img-top" width="200px" height="175px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ menu.name }}</h5>
+                            <p class="card-text">{{ menu.description }}</p>
+                            <h5 class="card-text mt-auto">€{{ menu.price }}</h5>
+                            <div class="d-flex justify-content-between align-item-center">
+                                <a href="#" class="btn btn-warning"><i class="fa-solid fa-pen"></i> Aanpassen</a>
+                                <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Verwijderen</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
