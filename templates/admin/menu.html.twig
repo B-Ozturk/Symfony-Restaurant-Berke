@@ -4,13 +4,14 @@
     <div class="container">
         <h1 class="text-center">Menu</h1>
         <center>
-            <a href="{{ path('admin_addItem') }}" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
+            <a href="{{ path('admin_add_item') }}" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
         </center>
 
-        <div class="row">
-            {% for menu in menus %}
-                <div class="col-md-4">
-                    <div class="card mb-4 border-dark">
+        <h3 class="text-center">Er zijn intotaal {{ menus|length }} items in de menu</h3><br>
+        <div class="row gy-3">
+            {%  for menu in menus %}
+                <div class=" col-12 col-md-4">
+                    <div class="card review_card border-dark">
                         <img src="../img/menu/{{ menu.picture }}" alt="{{ menu.name }}" class="card-img-top" width="200px" height="175px">
                         <div class="card-body">
                             <h5 class="card-title">{{ menu.name }}</h5>
@@ -21,7 +22,7 @@
                                 <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Verwijderen</a>
                             </div>
                         </div>
-                    </div>
+                    </div><br>
                 </div>
             {% endfor %}
         </div>

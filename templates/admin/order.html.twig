@@ -1,0 +1,13 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Order | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row gy-3">
+            <div class="col-md-12">
+                {% for item in items %}
+                    <p>{{ item.id }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

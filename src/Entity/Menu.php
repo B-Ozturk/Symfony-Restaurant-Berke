@@ -35,10 +35,6 @@ class Menu
         return $this->id;
     }
 
-    public function __toString(){
-        return $this->name;
-    }
-
     public function getName(): ?string
     {
         return $this->name;
@@ -50,10 +46,6 @@ class Menu
 
         return $this;
     }
-
-//    public function __toString(){
-//        return $this->description;
-//    }
 
     public function getDescription(): ?string
     {
