@@ -4,9 +4,37 @@
     <div class="container">
         <div class="row gy-3">
             <div class="col-md-12">
-                {% for item in items %}
-                    <p>{{ item.id }}</p>
-                {% endfor %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Afbeelding</th>
+                        <th scope="col">Naam</th>
+                        <th scope="col">Prijs</th>
+                        <th scope="col">Aantal</th>
+                        <th scope="col">Totale prijs</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if order.items|length != 0 %}
+                    {% set number= 1 %}
+
+                    {% set counter= 0 %}
+                    {% for item in order.items %}
+                        <tr>
+                            <th>{{ number }}</th>
+                            <th><img src="../../img/menu/{{ item.product.picture }}" alt="{{ item.product.picture }}" width="100" height="50px"></th>
+                            <th>{{ item.product.name }}</th>
+                            <th>&euro; {{ item.product.price }}</th>
+                            <th>{{amount_array[counter]}}</th>
+                            <th>&euro; {{ (item.product.price * amount_array[counter])|number_format(2, '.', ',')}}</th>
+                            {%  set counter= counter+1 %}
+                        </tr>
+                    {% set number= number+1 %}
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

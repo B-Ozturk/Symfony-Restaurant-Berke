@@ -13,7 +13,7 @@ class BestellenController extends AbstractController
     #[Route('/bestellen', name: '_bestellen')]
     public function index(MenuRepository $MenuRepository): Response
     {
-        $menus = $MenuRepository->findAll();
+        $menus = $MenuRepository->findBy([], ['category' => 'ASC']);
 
         return $this->render('user/bestellen.html.twig',[
             'menus' => $menus

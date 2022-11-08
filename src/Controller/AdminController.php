@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Form\MenuItemType;
 use App\Repository\MenuRepository;
@@ -68,6 +69,8 @@ class AdminController extends AbstractController
 
             $entityManager->persist($menu);
             $entityManager->flush();
+
+            return $this->redirectToRoute('admin_add_item_complete');
         }
 
         return $this->render('admin/AddItem.html.twig', [
@@ -75,10 +78,18 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/add_item_complete', name: 'add_item_complete')]
+    public function add_item_complete(): Response
+    {
+        return $this->render('admin/action_complete.html.twig', [
+            'text' => 'Item successvol toegevoegd aan het menu',
+        ]);
+    }
+
     #[Route('/orders', name: 'orders')]
     public function showOrders(OrderRepository $OrderRepository): Response
     {
-        $carts = $OrderRepository->findAll();
+        $carts = $OrderRepository->findBy([], ['id' => 'DESC']);
 
         return $this->render('admin/orders.html.twig', [
             'carts' => $carts
@@ -86,16 +97,14 @@ class AdminController extends AbstractController
     }
 
     #[Route('/order/{id}', name: 'order', methods:['GET', 'HEAD'])]
-    public function showOrder(int $id, OrderItemRepository $OrderItemRepository, MenuRepository $MenuRepository): Response
+    public function showOrder(Order $order, OrderItemRepository $orderItemRepository): Response
     {
-        $items = $OrderItemRepository->findBy(['orderRef' => $id]);
+        $orderItem = $orderItemRepository->findBy(['orderRef' => $order]);
 
-//        $items = $OrderItemRepository->findBy(['orderRef' => $id]);
-//        $items->id;
-//        $cart_items = $MenuRepository->findBy(['id' => $items->id]);
+        $orderItemQuantity = array_map(function ($o){ return $o->getQuantity(); }, $orderItem);
 
         return $this->render('admin/order.html.twig', [
-            'items' => $items
+            'order' => $order, 'amount_array' => $orderItemQuantity
         ]);
     }
 }
