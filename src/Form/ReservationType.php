@@ -18,7 +18,6 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-//            ->add('name')
             ->add('persons', IntegerType::class , [
                 'required' => true,
                 'empty_data' => 'Persons',
@@ -26,8 +25,6 @@ class ReservationType extends AbstractType
             ])
             ->add('day')
             ->add('time')
-//            ->add('timestamp')
-//            ->add('user')
         ;
     }
 
