@@ -73,7 +73,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_add_item_complete');
         }
 
-        return $this->render('admin/AddItem.html.twig', [
+        return $this->render('admin/add_item.html.twig', [
             'addItemForm' => $form->createView()
         ]);
     }
@@ -82,7 +82,78 @@ class AdminController extends AbstractController
     public function add_item_complete(): Response
     {
         return $this->render('admin/action_complete.html.twig', [
-            'text' => 'Item successvol toegevoegd aan het menu',
+            'text' => 'Item is succesvol toegevoegd aan het menu',
+        ]);
+    }
+
+    #[Route('/menu/edit/{id}', name: 'edit_item')]
+    public function edit_item($id, MenuRepository $menuRepository, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $menu_item = $menuRepository->find($id);
+        $form = $this->createForm(MenuItemType::class, $menu_item);
+
+        $form->handleRequest($request);
+        $picture = $form->get('picture')->getData();
+
+        if ($form->isSubmitted() && $form->isValid()){
+            if ($picture){
+                if ($menu_item->getPicture() !== null){
+                    if (file_exists($this->getParameter('kernel.project_dir') . $menu_item->getPicture())){
+                        $this->getParameter('kernel.project_dir') . $menu_item->getPicture();
+                    }
+                    $newFileName = uniqid() . '.' . $picture->guessExtension();
+
+                    try {
+                        $picture->move(
+                            $this->getParameter('kernel.project_dir') . '/public/img/menu', $newFileName
+                        );
+                    } catch (FileException $e){
+                        return new Response($e->getMessage());
+                    }
+
+                    $menu_item->setPicture($newFileName);
+
+                    $entityManager->flush();
+
+                    $text = $menu_item->getName() . " is succesvol aangepast";
+
+                    return $this->render('admin/action_complete.html.twig', [
+                        'text' => $text,
+                    ]);
+                }
+            }else{
+                $menu_item->setName($form->get('name')->getData());
+                $menu_item->setDescription($form->get('description')->getData());
+                $menu_item->setPrice($form->get('price')->getData());
+                $menu_item->setCategory($form->get('category')->getData());
+
+                $entityManager->flush();
+
+                $text = $menu_item->getName() . " is succesvol aangepast";
+
+                return $this->render('admin/action_complete.html.twig', [
+                    'text' => $text,
+                ]);
+            }
+        }
+
+        return $this->render('admin/edit_item.html.twig', [
+        'menu_item' => $menu_item, 'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/menu/delete/{id}', name: 'delete_item')]
+    public function delete_item($id, MenuRepository $menuRepository, EntityManagerInterface $entityManager): Response
+    {
+        $menu_item = $menuRepository->find($id);
+
+        $entityManager->remove($menu_item);
+        $entityManager->flush();
+
+        $text =  $menu_item->getName() . " is succesvol verwijderd van het menu!";
+
+        return $this->render('admin/action_complete.html.twig', [
+            'text' => $text,
         ]);
     }
 
@@ -105,6 +176,21 @@ class AdminController extends AbstractController
 
         return $this->render('admin/order.html.twig', [
             'order' => $order, 'amount_array' => $orderItemQuantity
+        ]);
+    }
+
+    #[Route('/order/complete/{id}', name: 'complete_order', methods:['GET', 'DELETE'])]
+    public function completeOrder($id, OrderRepository $orderRepository, EntityManagerInterface $entityManager): Response
+    {
+        $order = $orderRepository->find($id);
+
+        $entityManager->remove($order);
+        $entityManager->flush();
+
+        $text = "Bestelling " . $id . " is succesvol afgerond!";
+
+        return $this->render('admin/action_complete.html.twig', [
+            'text' => $text,
         ]);
     }
 }

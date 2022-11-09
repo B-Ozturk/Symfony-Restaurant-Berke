@@ -7,7 +7,7 @@
             <a href="{{ path('admin_add_item') }}" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
         </center>
 
-        <h3 class="text-center">Er zijn intotaal {{ menus|length }} items in de menu</h3><br>
+        <h3 class="text-center">Er zijn in totaal {{ menus|length }} items in de menu</h3><br>
         <div class="row gy-3">
             {%  for menu in menus %}
                 <div class=" col-12 col-md-4">
@@ -18,8 +18,8 @@
                             <p class="card-text">{{ menu.description }}</p>
                             <h5 class="card-text mt-auto">€{{ menu.price }}</h5>
                             <div class="d-flex justify-content-between align-item-center">
-                                <a href="#" class="btn btn-warning"><i class="fa-solid fa-pen"></i> Aanpassen</a>
-                                <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Verwijderen</a>
+                                <a href="{{ path('admin_edit_item', {id: menu.id}) }}" class="btn btn-warning"><i class="fa-solid fa-pen"></i> Aanpassen</a>
+                                <a href="{{ path('admin_delete_item', {id: menu.id}) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Verwijderen</a>
                             </div>
                         </div>
                     </div><br>

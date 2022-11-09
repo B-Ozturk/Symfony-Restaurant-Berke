@@ -21,7 +21,7 @@
                             {% for item in form.items %}
                                 <li class="list-group-item d-flex">
                                     <div class="flex-fill mr-2">
-                                        <img src="https://via.placeholder.com/200x150" width="64" alt="Product image">
+                                        <img src="../img/menu/{{ item.vars.data.product.picture }}" width="150" alt="Product image">
                                     </div>
                                     <div class="flex-fill mr-2">
                                         <h5 class="mt-0 mb-0">{{ item.vars.data.product.name }}</h5>
@@ -55,7 +55,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between">
                                 <div><b>Total</b></div>
-                                <span><b>{{ cart.total }} €</b></span>
+                                <span><b>{{ cart.total|number_format(2, '.', ',') }} €</b></span>
                             </li>
                         </ul>
                         <div class="card-body">

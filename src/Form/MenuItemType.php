@@ -20,7 +20,10 @@ class MenuItemType extends AbstractType
             ->add('name')
             ->add('description', TextareaType::class)
             ->add('price', MoneyType::class)
-            ->add('picture', FileType::class)
+            ->add('picture', FileType::class, array(
+                'required' => false,
+                'mapped' => false,
+            ))
             ->add('category')
         ;
     }
