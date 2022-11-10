@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Menu;
-use Doctrine\DBAL\Types\IntegerType;
+use \Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -19,7 +19,11 @@ class MenuItemType extends AbstractType
         $builder
             ->add('name')
             ->add('description', TextareaType::class)
-            ->add('price', MoneyType::class)
+            ->add('price', IntegerType::class , [
+                'required' => true,
+                'empty_data' => 'Persons',
+                'attr' => array("min" => 1, "max" => 100)
+            ])
             ->add('picture', FileType::class, array(
                 'required' => false,
                 'mapped' => false,

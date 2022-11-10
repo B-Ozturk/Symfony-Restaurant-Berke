@@ -4,25 +4,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <h3 class="text-center">Voeg hier een item toe aan het menu</h3>
                 <div class="form-group">
                     {{ form_start(addItemForm) }}
-                        <div class="form-group">
-                            {{ form_row(addItemForm.name) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(addItemForm.description) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(addItemForm.price) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(addItemForm.picture) }}
-                        </div>
-                        <div class="form-group">
-                            {{ form_row(addItemForm.category) }}
-                        </div>
-                        <div class="form-group">
-                            <input class="btn" type="submit" value="Voeg toe">
+                        <div class="symfony_add_item_form">
+                            <div class="form-group">
+                                {{ form_row(addItemForm.name) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(addItemForm.description) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(addItemForm.price) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(addItemForm.picture) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(addItemForm.category) }}
+                            </div>
+                            <div class="form-group">
+                                <input class="btn" type="submit" value="Voeg toe">
+                            </div>
                         </div>
                     {{ form_end(addItemForm) }}
                 </div>

@@ -2,3 +2,37 @@
     margin-bottom: 10px;
     /*margin-left: 500px;*/
 }
+
+.symfony_add_item_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_add_item_form > textarea{
+    background-color: #eeeeee;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 600px;
+    height: 70px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+
+.symfony_add_item_form .form-group > div{
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.symfony_add_item_form #menu_item_category{
+    background-color: #eeeeee;
+    border: 2px solid black;
+    border-radius: 10px;
+}
