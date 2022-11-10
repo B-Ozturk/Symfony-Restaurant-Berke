@@ -203,6 +203,12 @@ input[type=submit]{
     column-gap: 10px;
 }
 
+/* User navbar css*/
+.navbar a:hover, .dropdown:hover .dropbtn {
+    font-weight: bolder;
+    font-size: 20px;
+}
+
 /* User Bestellen detail pagina css*/
 .symfony_product_detail{
     background-color: #dedede;
@@ -290,6 +296,23 @@ input[type=submit]{
 }
 
 .symfony_review_form .form-group > div {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* User edit profile pagina css */
+.symfony_edit_profile_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_edit_profile_form .form-group > div{
     font-weight: bold;
     display: flex;
     flex-direction: column;

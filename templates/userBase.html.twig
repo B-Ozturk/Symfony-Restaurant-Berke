@@ -36,11 +36,20 @@
                     <li class="nav-item">
                         <a class="nav-link active text-light" href="{{ path('user_cart') }}"><i class="fa-sharp fa-solid fa-cart-shopping"></i>Winkelwagen</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active text-light" href="#"><i class="fa-solid fa-circle-user"></i>Profiel</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active text-light" tabindex="-1" href="/logout"><i class="fa-solid fa-user-slash"></i>Afmelden</a>
+                    <li class="nav-item" tabindex="-1">
+                        <div class="btn-group nav-item">
+                            <button class="btn nav-link active text-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-circle-user"></i>Profiel
+                            </button>
+                            <ul class="dropdown-menu text-light active bg-secondary">
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="{{ path('user_profile') }}"><i class="fa-solid fa-user-pen"></i>Profiel bewerken</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active text-light" href="/logout"><i class="fa-solid fa-user-slash"></i>Afmelden</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>

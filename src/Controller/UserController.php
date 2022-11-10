@@ -2,25 +2,99 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Form\EditPasswordType;
+use App\Form\EditProfileType;
+use App\Form\RegistrationFormType;
 use App\Repository\MenuRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/user', name: 'user')]
+#[Route('/user', name: 'user_')]
 class UserController extends AbstractController
 {
 //  User home page
-    #[Route('/home', name: '_home')]
-    public function userhome(): Response
+    #[Route('/home', name: 'home')]
+    public function userHome(): Response
     {
         return $this->render('user/home.html.twig', [
             'test' => 'als je dit ziet dan werkt het'
         ]);
     }
 
-    #[Route('/ordercomplete', name:'_order_complete')]
+    #[Route('/profile', name: 'profile')]
+    public function userProfile(): Response{
+        $user = $this->getUser();
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/profile/edit', name: 'edit_profile')]
+    public function userProfileEdit(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditProfileType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $user->setName($form->get('name')->getData());
+            $user->setEmail($form->get('email')->getData());
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_change_profile_complete');
+        }
+
+        return $this->render('user/edit_profile.html.twig', [
+            'user' => $user, 'profile_form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/profile/password', name: 'edit_password')]
+    public function userPasswordEdit(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher): Response{
+        $user = $this->getUser();
+        $form = $this->createForm(EditPasswordType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $plainPassword = $form->get('password')->getData();
+            $repeatPlainPassword = $form->get('repeatPassword')->getData();
+
+            if ($repeatPlainPassword === $plainPassword){
+                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($hashedPassword);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('user_change_profile_complete');
+            } else {
+                echo "<script>alert('Ingevoerde wachtwoorden komen niet overeen!')</script>";
+            }
+
+
+        }
+
+        return $this->render('user/edit_password.html.twig', [
+            'password_form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/profile/complete', name: 'change_profile_complete')]
+    public function userProfileChangeComplete(): Response{
+        return $this->render('user/action_complete.html.twig', [
+            'text' => 'Profiel is succesvol aangepast!'
+        ]);
+    }
+
+    #[Route('/ordercomplete', name:'order_complete')]
     public function userOrderComplete(): Response
     {
         return $this->render('user/action_complete.html.twig', [
@@ -29,7 +103,7 @@ class UserController extends AbstractController
     }
 
     //  User review complete
-    #[Route('/reviewcomplete', name: '_review_complete')]
+    #[Route('/reviewcomplete', name: 'review_complete')]
     public function userReviewComplete(): Response
     {
         return $this->render('user/action_complete.html.twig', [
@@ -38,7 +112,7 @@ class UserController extends AbstractController
     }
 
     //  User reserveren complete
-    #[Route('/reserverencomplete', name: '_reserveren_complete')]
+    #[Route('/reserverencomplete', name: 'reserveren_complete')]
     public function userReserverenComplete(): Response
     {
         return $this->render('user/action_complete.html.twig', [
@@ -47,7 +121,7 @@ class UserController extends AbstractController
     }
 
     //  User bestellen complete
-    #[Route('/bestellencomplete', name: '_bestellen_complete')]
+    #[Route('/bestellencomplete', name: 'bestellen_complete')]
     public function userBestellenComplete(): Response
     {
         return $this->render('user/action_complete.html.twig', [

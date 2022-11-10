@@ -1,0 +1,32 @@
+{%  extends 'userBase.html.twig' %}
+{% block title %}Restaurant Berke{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{ form_start(profile_form) }}
+                        <div class="symfony_edit_profile_form">
+                            <div class="form-group">
+                                {{ form_row(profile_form.name) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(profile_form.email) }}
+                            </div>
+                            <div class="form-group">
+{#                                {{ form_row(profile_form.password, {label: 'Password'}) }}#}
+                            </div>
+                            <div class="form-group">
+{#                                {{ form_row(profile_form.repeatPassword, {label: 'Repeat password'}) }}#}
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-warning" type="submit" value="Wijzigen">
+                            </div>
+                        </div>
+                    {{ form_end(profile_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
