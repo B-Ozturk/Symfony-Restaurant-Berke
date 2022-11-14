@@ -21,11 +21,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <a href="{{ path('user_edit_profile') }}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i>Change profile</a>
+            <div class="col-md-4">
+                <a href="{{ path('user_edit_profile') }}" class="btn btn-warning"><i class="fa-solid fa-user-pen"></i> Profiel aanpassen</a>
             </div>
-            <div class="col-md-6">
-                <a href="{{ path('user_edit_password') }}" class="btn btn-warning"><i class="fa-solid fa-user-lock"></i>Change password</a>
+            <div class="col-md-4">
+                <a href="{{ path('user_edit_password') }}" class="btn btn-warning"><i class="fa-solid fa-user-lock"></i> Wachtwoord wijzigen</a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('user_delete_profile', {id: user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i> Profiel verwijderen</a>
             </div>
         </div>
     </div>

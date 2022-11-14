@@ -6,6 +6,7 @@ use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
 use App\Form\RegistrationFormType;
 use App\Repository\MenuRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile', name: 'profile')]
-    public function userProfile(): Response{
+    public function userProfile(): Response
+    {
         $user = $this->getUser();
 
         return $this->render('user/profile.html.twig', [
@@ -58,7 +60,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/password', name: 'edit_password')]
-    public function userPasswordEdit(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher): Response{
+    public function userPasswordEdit(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
         $user = $this->getUser();
         $form = $this->createForm(EditPasswordType::class, $user);
         $form->handleRequest($request);
@@ -87,8 +90,28 @@ class UserController extends AbstractController
         ]);
     }
 
+    #[Route('/profile/delete/{id}', name: 'delete_profile')]
+    public function deleteProfile($id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+//        $logged_user = $userRepository->find($id);
+
+//        dd($logged_user);
+
+//        $entityManager->remove($logged_user);
+//        $entityManager->flush();
+
+//        $text = "<script>alert('Uw account is succesvol verwijderd!')</script>";
+
+
+        return $this->render('user/action_complete.html.twig', [
+            'text' => 'Uw profiel wordt binnen 3 werkdagen definitief verwijderd!'
+        ]);
+    }
+
+
     #[Route('/profile/complete', name: 'change_profile_complete')]
-    public function userProfileChangeComplete(): Response{
+    public function userProfileChangeComplete(): Response
+    {
         return $this->render('user/action_complete.html.twig', [
             'text' => 'Profiel is succesvol aangepast!'
         ]);

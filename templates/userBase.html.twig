@@ -22,31 +22,31 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="{{ path('user_home') }}"><i class="fa-sharp fa-solid fa-house"></i>Home</a>
+                        <a class="nav-link active text-light" aria-current="page" href="{{ path('user_home') }}"><i class="fa-sharp fa-solid fa-house"></i> Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light" href="{{ path('user_bestellen') }}"><i class="fa-sharp fa-solid fa-truck-fast"></i>Bestellen</a>
+                        <a class="nav-link active text-light" href="{{ path('user_bestellen') }}"><i class="fa-sharp fa-solid fa-truck-fast"></i> Bestellen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light" href="{{ path('user_reserveren') }}"><i class="fa-solid fa-clock"></i>Reserveren</a>
+                        <a class="nav-link active text-light" href="{{ path('user_reserveren') }}"><i class="fa-solid fa-clock"></i> Reserveren</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light" href="{{ path('user_review') }}"><i class="fa-sharp fa-solid fa-star"></i>Review</a>
+                        <a class="nav-link active text-light" href="{{ path('user_review') }}"><i class="fa-sharp fa-solid fa-star"></i> Review</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active text-light" href="{{ path('user_cart') }}"><i class="fa-sharp fa-solid fa-cart-shopping"></i>Winkelwagen</a>
+                        <a class="nav-link active text-light" href="{{ path('user_cart') }}"><i class="fa-sharp fa-solid fa-cart-shopping"></i> Winkelwagen</a>
                     </li>
                     <li class="nav-item" tabindex="-1">
                         <div class="btn-group nav-item">
                             <button class="btn nav-link active text-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-circle-user"></i>Profiel
+                                <i class="fa-solid fa-user"></i> {{ app.user.name }}
                             </button>
                             <ul class="dropdown-menu text-light active bg-secondary">
                                 <li class="nav-item">
-                                    <a class="nav-link active text-light" href="{{ path('user_profile') }}"><i class="fa-solid fa-user-pen"></i>Profiel bewerken</a>
+                                    <a class="nav-link active text-light" href="{{ path('user_profile') }}"><i class="fa-solid fa-user-gear"></i> Account</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active text-light" href="/logout"><i class="fa-solid fa-user-slash"></i>Afmelden</a>
+                                    <a class="nav-link active text-light" href="/logout"><i class="fa-solid fa-user-slash"></i> Afmelden</a>
                                 </li>
                             </ul>
                         </div>

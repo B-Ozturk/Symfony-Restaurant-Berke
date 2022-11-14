@@ -9,6 +9,7 @@ use App\Form\MenuItemType;
 use App\Repository\MenuRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,32 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/home.html.twig', [
             'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/members', name: 'members')]
+    public function showMembers(UserRepository $userRepository): Response
+    {
+//        $users = $userRepository->findBy(['id' => 2]);
+        $users = $userRepository->findAll();
+
+        return $this->render('admin/members.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    #[Route('/members/delete/{id}', name: 'delete_member')]
+    public function deleteMember($id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $member = $userRepository->find($id);
+
+        $entityManager->remove($member);
+        $entityManager->flush();
+
+        $text = $member->getName() . " is succesvol verwijderd!";
+
+        return $this->render('admin/action_complete.html.twig', [
+            'text' => $text,
         ]);
     }
 
