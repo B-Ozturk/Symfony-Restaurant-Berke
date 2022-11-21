@@ -9,6 +9,7 @@ use App\Form\MenuItemType;
 use App\Repository\MenuRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -32,7 +33,9 @@ class AdminController extends AbstractController
     #[Route('/members', name: 'members')]
     public function showMembers(UserRepository $userRepository): Response
     {
-//        $users = $userRepository->findBy(['id' => 2]);
+        $variable = "ROLE_USER";
+
+//        $users = $userRepository->findUsersOnly();
         $users = $userRepository->findAll();
 
         return $this->render('admin/members.html.twig', [
@@ -41,9 +44,16 @@ class AdminController extends AbstractController
     }
 
     #[Route('/members/delete/{id}', name: 'delete_member')]
-    public function deleteMember($id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function deleteMember($id, UserRepository $userRepository, ReviewRepository $reviewRepository , EntityManagerInterface $entityManager): Response
     {
         $member = $userRepository->find($id);
+        $review = $reviewRepository->findOneBy(['user' => $member->getId()]);
+
+//        dd($review);
+
+        $entityManager->remove($review);
+        $entityManager->flush();
+//        dd(123);
 
         $entityManager->remove($member);
         $entityManager->flush();
