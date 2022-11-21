@@ -31,12 +31,9 @@ class AdminController extends AbstractController
     }
 
     #[Route('/members', name: 'members')]
-    public function showMembers(UserRepository $userRepository): Response
+    public function showMembers(UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $variable = "ROLE_USER";
-
-//        $users = $userRepository->findUsersOnly();
-        $users = $userRepository->findAll();
+        $users = $userRepository->findUsersOnly();
 
         return $this->render('admin/members.html.twig', [
             'users' => $users,
@@ -49,13 +46,13 @@ class AdminController extends AbstractController
         $member = $userRepository->find($id);
         $review = $reviewRepository->findOneBy(['user' => $member->getId()]);
 
-//        dd($review);
+        if ($review){
+            $entityManager->remove($review);
+        }
+        if ($member){
+            $entityManager->remove($member);
+        }
 
-        $entityManager->remove($review);
-        $entityManager->flush();
-//        dd(123);
-
-        $entityManager->remove($member);
         $entityManager->flush();
 
         $text = $member->getName() . " is succesvol verwijderd!";

@@ -6,14 +6,17 @@ use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
 use App\Form\RegistrationFormType;
 use App\Repository\MenuRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/user', name: 'user_')]
 class UserController extends AbstractController
@@ -91,21 +94,29 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/delete/{id}', name: 'delete_profile')]
-    public function deleteProfile($id, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function deleteProfile($id, UserRepository $userRepository, ReviewRepository $reviewRepository , EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
     {
-//        $logged_user = $userRepository->find($id);
+        $user = $userRepository->find($id);
+        $review = $reviewRepository->findOneBy(['user' => $user]);
 
-//        dd($logged_user);
+        if ($review){
+            $entityManager->remove($review);
+        } else {
+//            nothing
+        }
 
-//        $entityManager->remove($logged_user);
-//        $entityManager->flush();
+        if ($user){
+            $entityManager->remove($user);
+        } else {
+//            if the user doesn't exist something went wrong while writing this code
+        }
 
-//        $text = "<script>alert('Uw account is succesvol verwijderd!')</script>";
+        $entityManager->flush();
+        $tokenStorage->setToken(null);
+        $session->invalidate();
 
+        return $this->redirectToRoute('app_logout');
 
-        return $this->render('user/action_complete.html.twig', [
-            'text' => 'Uw profiel wordt binnen 3 werkdagen definitief verwijderd!'
-        ]);
     }
 
 
