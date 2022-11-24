@@ -64,6 +64,12 @@
     <div class="jumbotron jumbotron-fluid bg-danger" id="statisticBanner"></div>
 </div>
 
+{% for success in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ success }}
+    </div>
+{% endfor %}
+
 {% block body %}{% endblock %}
 </body>
 </html>

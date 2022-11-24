@@ -23,7 +23,9 @@ class ReservationType extends AbstractType
                 'empty_data' => 'Persons',
                 'attr' => array("min" => 1, "max" => 20, 'value' => 1)
             ])
-            ->add('day')
+            ->add('day', DateType::class, [
+                'widget' => 'single_text'
+            ])
             ->add('time')
         ;
     }
