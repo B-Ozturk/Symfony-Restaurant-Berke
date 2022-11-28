@@ -22,8 +22,6 @@ request.onload = function(){
         let t=document.querySelector("#temp").innerHTML=temp2+"&#176;c";
         let img=document.querySelector("#img");
         img.setAttribute("src","http://openweathermap.org/img/wn/"+icon+"@2x.png")
-
-
     }
 }
 request.send();

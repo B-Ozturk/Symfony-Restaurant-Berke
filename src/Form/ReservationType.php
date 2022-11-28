@@ -3,13 +3,16 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
-use Doctrine\DBAL\Types\DateImmutableType;
-use Doctrine\DBAL\Types\DateTimeType;
-use Doctrine\DBAL\Types\DateType;
-use Doctrine\DBAL\Types\TimeType;
+//use Doctrine\DBAL\Types\DateImmutableType;
+//use Doctrine\DBAL\Types\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+//use Doctrine\DBAL\Types\DateType;
+//use Doctrine\DBAL\Types\TimeType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+//use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,9 +27,16 @@ class ReservationType extends AbstractType
                 'attr' => array("min" => 1, "max" => 20, 'value' => 1)
             ])
             ->add('day', DateType::class, [
-                'widget' => 'single_text'
+                'widget' => 'choice',
+                'years' => range(date('Y'), date('Y')+0),
+                'months' => range(date('m'), date('m')+1),
+                'days' => range(date('d'), date('d')+7),
             ])
-            ->add('time')
+            ->add('time', TimeType::class, [
+                'widget' => 'single_text',
+                'hours' => range(10, 23),
+                'attr' => array('min' => '10:00', 'max' => '23:00')
+            ])
         ;
     }
 
