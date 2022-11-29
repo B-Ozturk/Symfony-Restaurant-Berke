@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\Menu;
 use App\Entity\Order;
 use App\Entity\OrderItem;
+use App\Entity\Reservation;
 use App\Form\MenuItemType;
 use App\Repository\MenuRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
+use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -185,6 +188,33 @@ class AdminController extends AbstractController
         $entityManager->flush();
 
         $text =  $menu_item->getName() . " is succesvol verwijderd van het menu!";
+
+        return $this->render('admin/action_complete.html.twig', [
+            'text' => $text,
+        ]);
+    }
+
+    #[Route('/reservations', name: 'reservations')]
+    public function showReservations(ReservationRepository $reservationRepository): Response
+    {
+        $todaysDate = new \DateTime();
+
+        $todaysReservations = $reservationRepository->findBy(['day' => $todaysDate], ['time' => 'ASC']);
+
+        return $this->render('admin/reservations.html.twig', [
+            'todaysReservations' => $todaysReservations,
+        ]);
+    }
+
+    #[Route('/reservation/complete/{id}', name: 'reservation_complete')]
+    public function completeReservations($id ,ReservationRepository $reservationRepository, EntityManagerInterface $entityManager): Response
+    {
+        $reservation = $reservationRepository->findOneBy(['id' => $id]);
+
+        $entityManager->remove($reservation);
+        $entityManager->flush();
+
+        $text = "Reservering #" . $id . " is succesvol afgerond!";
 
         return $this->render('admin/action_complete.html.twig', [
             'text' => $text,

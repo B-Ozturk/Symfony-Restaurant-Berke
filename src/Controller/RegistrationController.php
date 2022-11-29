@@ -54,7 +54,8 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-                    ->embed(fopen('/img/logo1.png', 'r'))
+//                    ->embedFromPath('logo1.jpg', 'footer-signature', 'image/gif')
+//                    ->html('<div background="cid:footer-signature"></div>')
             );
             // do anything else you need here, like send an email
 

@@ -1,0 +1,41 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Reservations | Restaurant Berke{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Er zijn {{ todaysReservations|length }} resreveringen voor vandaag</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Naam</th>
+                    <th scope="col">Personen</th>
+                    <th scope="col">Tijd</th>
+                    <th scope="col">status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set count=1 %}
+                {% for reservation in todaysReservations %}
+                    <tr>
+                        <td>{{ count }}</td>
+                        <td>{{ reservation.name }}</td>
+                        <td>{{ reservation.persons }}</td>
+                        <td>{{ reservation.time|date('H:i') }}</td>
+                        <td>
+                            <a href="{{ path('admin_reservation_complete', {id: reservation.id}) }}" class="btn btn-warning"><i class="fa-solid fa-circle-check"></i> Afronden</a>
+                        </td>
+                    </tr>
+                    {% set count= count+1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
