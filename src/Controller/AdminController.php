@@ -262,10 +262,10 @@ class AdminController extends AbstractController
     #[Route('/member/profile/{id}', name: 'member_profile')]
     public function showMemberProfile($id, UserRepository $userRepository): Response
     {
-        
+        $user = $userRepository->find($id);
 
         return $this->render('show_user/showProfile.html.twig', [
-            'controller_name' => 'ShowUserController'
+            'user' => $user,
         ]);
     }
 }

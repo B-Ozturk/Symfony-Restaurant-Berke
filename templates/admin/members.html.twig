@@ -25,8 +25,8 @@
                     {% for user in users %}
                     <tr>
                         <td>{{ count }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
+                        <td><a href="{{ path('admin_member_profile', {id: user.id}) }}">{{ user.name }}</a></td>
+                        <td><a href="{{ path('admin_member_profile', {id: user.id}) }}">{{ user.email }}</a></td>
                         <td><a href="{{ path('admin_delete_member', {id: user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i> Verwijderen</a></td>
                     </tr>
                     {% set count = count + 1 %}
