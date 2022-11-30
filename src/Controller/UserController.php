@@ -25,7 +25,7 @@ class UserController extends AbstractController
     #[Route('/home', name: 'home')]
     public function userHome(): Response
     {
-        return $this->render('user/showProfile.html.twig', [
+        return $this->render('user/home.html.twig', [
             'test' => 'als je dit ziet dan werkt het'
         ]);
     }
