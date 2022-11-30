@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 
@@ -28,7 +29,7 @@ class AdminController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(): Response
     {
-        return $this->render('admin/home.html.twig', [
+        return $this->render('admin/showProfile.html.twig', [
             'controller_name' => 'AdminController',
         ]);
     }
@@ -224,7 +225,7 @@ class AdminController extends AbstractController
     #[Route('/orders', name: 'orders')]
     public function showOrders(OrderRepository $OrderRepository): Response
     {
-        $carts = $OrderRepository->findBy([], ['id' => 'DESC']);
+        $carts = $OrderRepository->findBy([], ['id' => 'ASC']);
 
         return $this->render('admin/orders.html.twig', [
             'carts' => $carts
@@ -255,6 +256,16 @@ class AdminController extends AbstractController
 
         return $this->render('admin/action_complete.html.twig', [
             'text' => $text,
+        ]);
+    }
+
+    #[Route('/member/profile/{id}', name: 'member_profile')]
+    public function showMemberProfile($id, UserRepository $userRepository): Response
+    {
+        
+
+        return $this->render('show_user/showProfile.html.twig', [
+            'controller_name' => 'ShowUserController'
         ]);
     }
 }

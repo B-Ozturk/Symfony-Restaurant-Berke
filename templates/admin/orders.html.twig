@@ -9,6 +9,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Naam</th>
                             <th scope="col">Bestelling</th>
                             <th scope="col">Status</th>
                         </tr>
@@ -18,6 +19,7 @@
                         {% for cart in carts %}
                             <tr>
                                 <td>{{ count }}</td>
+                                <td><a href="{{ path('admin_member_profile', {id: cart.user.id}) }}">{{ cart.user.name }}</a></td>
                                 <td><a href="{{ path('admin_order', {id: cart.id}) }}"> Order number: {{ cart.id }}</a></td>
                                 <td>
                                     <a href="{{ path('admin_complete_order', {id: cart.id}) }}" class="btn btn-warning"><i class="fa-solid fa-circle-check"></i> Afronden</a>

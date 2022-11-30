@@ -6,6 +6,8 @@ use App\Entity\Order;
 use App\Factory\OrderFactory;
 use App\Storage\CartSessionStorage;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Env\Request;
+use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
 /**
  * Class CartManager
@@ -28,6 +30,10 @@ class CartManager
      */
     private $entityManager;
 
+    private $tokenStorage;
+
+    private $user;
+
     /**
      * CartManager constructor.
      *
@@ -38,12 +44,34 @@ class CartManager
     public function __construct(
         CartSessionStorage $cartStorage,
         OrderFactory $orderFactory,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        TokenStorageInterface $tokenStorage
     ) {
+        $this->tokenStorage = $tokenStorage;
         $this->cartSessionStorage = $cartStorage;
         $this->cartFactory = $orderFactory;
         $this->entityManager = $entityManager;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return CartManager
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+
 
     /**
      * Gets the current cart.
@@ -67,8 +95,6 @@ class CartManager
     public function save(Order $cart): void
     {
         // Persist in database
-
-
         $this->entityManager->persist($cart);
         $this->entityManager->flush();
         // Persist in session

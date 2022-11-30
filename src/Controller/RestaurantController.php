@@ -18,7 +18,7 @@ class RestaurantController extends AbstractController
     {
         $test = "als je dit ziet dan werkt het";
 
-        return $this->render('restaurant/home.html.twig', [
+        return $this->render('restaurant/showProfile.html.twig', [
             'test' => $test
         ]);
     }
