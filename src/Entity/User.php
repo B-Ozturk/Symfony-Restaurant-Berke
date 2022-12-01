@@ -40,9 +40,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, orphanRemoval: true)]
     private Collection $orders;
 
-    #[ORM\OneToMany(mappedBy: 'u', targetEntity: Order::class, orphanRemoval: true)]
-    private Collection $bestellingen;
-
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -172,36 +169,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($order->getUser() === $this) {
                 $order->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Order>
-     */
-    public function getBestellingen(): Collection
-    {
-        return $this->bestellingen;
-    }
-
-    public function addBestellingen(Order $bestellingen): self
-    {
-        if (!$this->bestellingen->contains($bestellingen)) {
-            $this->bestellingen->add($bestellingen);
-            $bestellingen->setU($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBestellingen(Order $bestellingen): self
-    {
-        if ($this->bestellingen->removeElement($bestellingen)) {
-            // set the owning side to null (unless already changed)
-            if ($bestellingen->getU() === $this) {
-                $bestellingen->setU(null);
             }
         }
 
