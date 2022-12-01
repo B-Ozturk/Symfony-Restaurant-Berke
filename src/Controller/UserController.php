@@ -6,6 +6,8 @@ use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
 use App\Form\RegistrationFormType;
 use App\Repository\MenuRepository;
+use App\Repository\OrderRepository;
+use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -90,6 +92,26 @@ class UserController extends AbstractController
 
         return $this->render('user/edit_password.html.twig', [
             'password_form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/profile/{id}/reservations', name: 'reservations')]
+    public function showReservations($id, ReservationRepository $reservationRepository): Response
+    {
+        $reservations = $reservationRepository->findBy(['user' => $id],['day' => 'DESC']);
+
+        return $this->render('show_user/showReservations.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
+
+    #[Route('/profile/{id}/orders', name: 'orders')]
+    public function showOrders($id, OrderRepository $orderRepository): Response
+    {
+        $orders = $orderRepository->findBy(['user' => $id]);
+
+        return $this->render('show_user/showOrders.html.twig', [
+            'orders' => $orders,
         ]);
     }
 

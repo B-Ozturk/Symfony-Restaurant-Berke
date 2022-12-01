@@ -21,11 +21,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 gy-3">
-                <span>BUTTON</span>
+            <div class="col-md-6">
+                <a href="{{ path('user_reservations', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-clock-rotate-left"></i> Bekijk alle reserveringen</a>
             </div>
-            <div class="col-md-6 gy-3">
-                <span>BUTTON</span>
+            <div class="col-md-6">
+                <a href="{{ path('user_orders', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-truck-fast"></i> Bekijk alle bestellingen</a>
             </div>
         </div>
         <br>
