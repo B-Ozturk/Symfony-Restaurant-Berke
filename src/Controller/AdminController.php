@@ -264,7 +264,7 @@ class AdminController extends AbstractController
     {
         $user = $userRepository->find($id);
 
-        return $this->render('show_user/showProfile.html.twig', [
+        return $this->render('show_admin/showProfile.html.twig', [
             'user' => $user,
         ]);
     }

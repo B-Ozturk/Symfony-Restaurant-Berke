@@ -14,7 +14,7 @@ class ShowUserController extends AbstractController
     #[Route('/user/profile/{id}', name: 'show_user')]
     public function index(): Response
     {
-        return $this->render('show_user/showProfile.html.twig', [
+        return $this->render('show_admin/showProfile.html.twig', [
             'controller_name' => 'ShowUserController',
         ]);
     }
@@ -24,7 +24,7 @@ class ShowUserController extends AbstractController
     {
         $reservations = $reservationRepository->findBy(['user' => $id],['day' => 'DESC']);
 
-        return $this->render('show_user/showReservations.html.twig', [
+        return $this->render('show_admin/showReservations.html.twig', [
             'reservations' => $reservations,
         ]);
     }
@@ -34,7 +34,7 @@ class ShowUserController extends AbstractController
     {
         $orders = $orderRepository->findBy(['user' => $id]);
 
-        return $this->render('show_user/showOrders.html.twig', [
+        return $this->render('show_admin/showOrders.html.twig', [
             'orders' => $orders,
         ]);
     }

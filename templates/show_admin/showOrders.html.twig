@@ -1,0 +1,30 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Orders | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Bestelling</th>
+                        <th scope="col">Geplaatst op</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set count=1 %}
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ count }}</td>
+                            <td><a href="{{ path('admin_order', {id: order.id}) }}"> Order number: {{ order.id }}</a></td>
+                            <td>{{ order.updatedAt|date('H:i ~ d-m-Y') }}</td>
+                        </tr>
+                        {% set count= count+1 %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
