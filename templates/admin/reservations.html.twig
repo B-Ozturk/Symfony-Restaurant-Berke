@@ -24,7 +24,7 @@
                 {% for reservation in todaysReservations %}
                     <tr>
                         <td>{{ count }}</td>
-                        <td>{{ reservation.name }}</td>
+                        <td><a href="{{ path('admin_member_profile', {id: reservation.user.id}) }}">{{ reservation.user.name }}</a></td>
                         <td>{{ reservation.persons }}</td>
                         <td>{{ reservation.time|date('H:i') }}</td>
                         <td>

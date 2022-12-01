@@ -24,7 +24,6 @@ class ReserverenController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
             $reservation->setUser($this->getUser());
-            $reservation->setName($this->getUser()->getName());
             $reservation->setTimestamp(new \DateTimeImmutable());
             $entityManager->persist($reservation);
             $entityManager->flush();
@@ -32,6 +31,6 @@ class ReserverenController extends AbstractController
             return $this->redirectToRoute('user_reserveren_complete');
         }
 
-        return new Response($twig->render('user/reserveren.html.twig', ['reservation_form' => $form->createView()]));
+        return new Response($twig->render('reserveren/index.html.twig', ['reservation_form' => $form->createView()]));
     }
 }
