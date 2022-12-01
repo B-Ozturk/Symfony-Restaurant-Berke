@@ -23,15 +23,15 @@
             </div>
         </div>
         <div class="row">
-{#            <div class="col-md-4">#}
-{#                <a href="{{ path('user_edit_profile') }}" class="btn btn-warning"><i class="fa-solid fa-user-pen"></i> Profiel aanpassen</a>#}
-{#            </div>#}
-{#            <div class="col-md-4">#}
-{#                <a href="{{ path('user_edit_password') }}" class="btn btn-warning"><i class="fa-solid fa-user-lock"></i> Wachtwoord wijzigen</a>#}
-{#            </div>#}
-{#            <div class="col-md-4">#}
-{#                <a href="{{ path('user_delete_profile', {id: user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i> Profiel verwijderen</a>#}
-{#            </div>#}
+            <div class="col-md-4">
+                <a href="{{ path('admin_member_reservations', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-clock-rotate-left"></i> Bekijk alle reserveringen</a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('admin_member_orders', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-truck-fast"></i> Bekijk alle bestellingen</a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('user_delete_profile', {id: user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i> Profiel verwijderen</a>
+            </div>
         </div>
     </div>
 {% endblock %}

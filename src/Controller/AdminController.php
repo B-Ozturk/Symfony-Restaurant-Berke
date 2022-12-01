@@ -259,7 +259,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/member/profile/{id}', name: 'member_profile')]
+    #[Route('/user/profile/{id}', name: 'member_profile')]
     public function showMemberProfile($id, UserRepository $userRepository): Response
     {
         $user = $userRepository->find($id);

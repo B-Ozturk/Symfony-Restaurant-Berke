@@ -1,0 +1,34 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Reservations | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Personen</th>
+                            <th scope="col">Tijd</th>
+                            <th scope="col">Dag</th>
+                            <th scope="col">Geplaatst op</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% set count=1 %}
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ count }}</td>
+                            <td>{{ reservation.persons }}</td>
+                            <td>{{ reservation.time|date('H:i') }}</td>
+                            <td>{{ reservation.day|date('d-m-Y') }}</td>
+                            <td>{{ reservation.timestamp|date('H:i d-m-Y') }}</td>
+                        </tr>
+                    {% set count= count+1 %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
