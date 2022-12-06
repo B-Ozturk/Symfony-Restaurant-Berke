@@ -14,6 +14,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Naam</th>
+                    <th scope="col">Tel</th>
                     <th scope="col">Personen</th>
                     <th scope="col">Tijd</th>
                     <th scope="col">status</th>
@@ -25,6 +26,7 @@
                     <tr>
                         <td>{{ count }}</td>
                         <td><a href="{{ path('admin_member_profile', {id: reservation.user.id}) }}">{{ reservation.user.name }}</a></td>
+                        <td><a href="tel:0{{ reservation.user.tel }}">0{{ reservation.user.tel }}</a></td>
                         <td>{{ reservation.persons }}</td>
                         <td>{{ reservation.time|date('H:i') }}</td>
                         <td>

@@ -40,6 +40,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, orphanRemoval: true)]
     private Collection $orders;
 
+    #[ORM\Column]
+    private ?int $tel = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -171,6 +174,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTel(): ?int
+    {
+        return $this->tel;
+    }
+
+    public function setTel(int $tel): self
+    {
+        $this->tel = $tel;
 
         return $this;
     }

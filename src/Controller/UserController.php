@@ -53,6 +53,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $user->setName($form->get('name')->getData());
             $user->setEmail($form->get('email')->getData());
+            $user->setTel($form->get('tel')->getData());
 
             $entityManager->persist($user);
             $entityManager->flush();
