@@ -6,6 +6,7 @@ use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
 use App\Form\RegistrationFormType;
 use App\Repository\MenuRepository;
+use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
@@ -112,6 +113,18 @@ class UserController extends AbstractController
 
         return $this->render('show_user/showOrders.html.twig', [
             'orders' => $orders,
+        ]);
+    }
+
+    #[Route('/profile/order/{id}', name: 'order', methods:['GET', 'HEAD'])]
+    public function showOrder(Order $order, OrderItemRepository $orderItemRepository): Response
+    {
+        $orderItem = $orderItemRepository->findBy(['orderRef' => $order]);
+
+        $orderItemQuantity = array_map(function ($o){ return $o->getQuantity(); }, $orderItem);
+
+        return $this->render('show_user/showOrder.html.twig', [
+            'order' => $order, 'amount_array' => $orderItemQuantity
         ]);
     }
 

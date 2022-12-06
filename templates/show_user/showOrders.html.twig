@@ -17,7 +17,7 @@
                     {% for order in orders %}
                         <tr>
                             <td>{{ count }}</td>
-                            <td><a href="{{ path('admin_order', {id: order.id}) }}"> Order number: {{ order.id }}</a></td>
+                            <td><a href="{{ path('user_order', {id: order.id}) }}"> Order number: {{ order.id }}</a></td>
                             <td>{{ order.updatedAt|date('H:i ~ d-m-Y') }}</td>
                         </tr>
                         {% set count= count+1 %}
