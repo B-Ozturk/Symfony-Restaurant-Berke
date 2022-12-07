@@ -2,6 +2,14 @@
 {% block title %}Profile | Restaurant Berke{% endblock %}
 {% block body %}
     <div class="container">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <a href="{{ path('user_reservations', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-clock-rotate-left"></i> Bekijk alle reserveringen</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ path('user_orders', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-truck-fast"></i> Bekijk alle bestellingen</a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <table class="table">
@@ -25,22 +33,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <a href="{{ path('user_reservations', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-clock-rotate-left"></i> Bekijk alle reserveringen</a>
+            <div class="col-md-3">
+                <a href="{{ path('user_delete_profile_picture') }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Foto verwijderen</a>
             </div>
-            <div class="col-md-6">
-                <a href="{{ path('user_orders', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-truck-fast"></i> Bekijk alle bestellingen</a>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="{{ path('user_edit_profile') }}" class="btn btn-warning"><i class="fa-solid fa-user-pen"></i> Profiel aanpassen</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="{{ path('user_edit_password') }}" class="btn btn-warning"><i class="fa-solid fa-user-lock"></i> Wachtwoord wijzigen</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="{{ path('user_delete_profile', {id: user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i> Profiel verwijderen</a>
             </div>
         </div>

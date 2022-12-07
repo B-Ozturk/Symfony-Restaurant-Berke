@@ -78,10 +78,7 @@ class UserController extends AbstractController
 
                     return $this->redirectToRoute('user_change_profile_complete');
                 }
-            } else {
-//               Code...
             }
-
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -92,6 +89,18 @@ class UserController extends AbstractController
         return $this->render('user/edit_profile.html.twig', [
             'user' => $user, 'profile_form' => $form->createView()
         ]);
+    }
+
+    #[Route('/profile/picture/delete', name: 'delete_profile_picture')]
+    public function userProfilePicture(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $user->setPicture('defaultProfile.png');
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user_change_profile_complete');
     }
 
     #[Route('/profile/password', name: 'edit_password')]
