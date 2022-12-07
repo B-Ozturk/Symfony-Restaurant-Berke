@@ -12,6 +12,7 @@ use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormEvent;
@@ -55,14 +56,32 @@ class UserController extends AbstractController
             $user->setEmail($form->get('email')->getData());
             $user->setTel($form->get('tel')->getData());
 
-            $oldPicture = $user->getPicture();
-            $newPicture = $form->get('picture')->getData();
+            $picture = $form->get('picture')->getData();
 
-            if ($newPicture){
-                $user->setPicture($newPicture);
-            } elseif(!$newPicture) {
-                $user->setPicture($oldPicture);
+            if ($picture){
+                if($user->getPicture() !== null){
+                    if (file_exists($this->getParameter('kernel.project_dir') . $user->getPicture())){
+                        $this->getParameter('kernel.project_dir') . $user->getPicture();
+                    }
+                    $newFileName = uniqid() . '.' . $picture->guessExtension();
+
+                    try {
+                        $picture->move(
+                            $this->getParameter('kernel.project_dir') . '/public/img/profile', $newFileName
+                        );
+                    } catch (FileException $e){
+                        return new Response($e->getMessage());
+                    }
+
+                    $user->setPicture($newFileName);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('user_change_profile_complete');
+                }
+            } else {
+//               Code...
             }
+
 
             $entityManager->persist($user);
             $entityManager->flush();

@@ -27,7 +27,7 @@
                     {% for user in users %}
                     <tr>
                         <td>{{ count }}</td>
-                        <td><img src="{{ asset('img/'~user.picture) }}" class="profilePicture"></td>
+                        <td><img src="{{ asset('img/profile/'~user.picture) }}" class="profilePicture"></td>
                         <td><a href="{{ path('admin_member_profile', {id: user.id}) }}">{{ user.name }}</a></td>
                         <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
                         <td><a href="tel:0{{ user.tel }}">0{{ user.tel }}</a></td>

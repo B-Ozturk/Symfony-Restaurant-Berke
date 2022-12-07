@@ -16,7 +16,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><img src="{{ asset('img/'~user.picture) }}" class="profilePicture"></td>
+                        <td><img src="{{ asset('img/profile/'~user.picture) }}" class="profilePicture"></td>
                         <td>{{ user.name }}</td>
                         <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
                         <td><a href="tel:0{{ user.tel }}">0{{ user.tel }}</a></td>
