@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,11 @@ class EditProfileType extends AbstractType
             ->add('name')
             ->add('email')
             ->add('tel')
+            ->add('picture', FileType::class, array(
+                'label' => 'Profiel foto',
+                'required' => false,
+                'mapped' => false,
+            ))
         ;
     }
 

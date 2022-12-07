@@ -37,6 +37,7 @@ class RegistrationController extends AbstractController
             // encode the plain password
             $user->setIsVerified(1);
             $user->setRoles(array("ROLE_USER"));
+            $user->setPicture('defaultProfile.png');
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,

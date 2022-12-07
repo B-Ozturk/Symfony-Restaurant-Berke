@@ -15,6 +15,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Profiel</th>
                         <th scope="col">Naam</th>
                         <th scope="col">Email</th>
                         <th scope="col">Tel</th>
@@ -26,8 +27,9 @@
                     {% for user in users %}
                     <tr>
                         <td>{{ count }}</td>
+                        <td><img src="{{ asset('img/'~user.picture) }}" class="profilePicture"></td>
                         <td><a href="{{ path('admin_member_profile', {id: user.id}) }}">{{ user.name }}</a></td>
-                        <td><a href="{{ path('admin_member_profile', {id: user.id}) }}">{{ user.email }}</a></td>
+                        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
                         <td><a href="tel:0{{ user.tel }}">0{{ user.tel }}</a></td>
                         <td><a href="{{ path('admin_delete_member', {id: user.id}) }}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i> Verwijderen</a></td>
                     </tr>

@@ -55,6 +55,15 @@ class UserController extends AbstractController
             $user->setEmail($form->get('email')->getData());
             $user->setTel($form->get('tel')->getData());
 
+            $oldPicture = $user->getPicture();
+            $newPicture = $form->get('picture')->getData();
+
+            if ($newPicture){
+                $user->setPicture($newPicture);
+            } elseif(!$newPicture) {
+                $user->setPicture($oldPicture);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
