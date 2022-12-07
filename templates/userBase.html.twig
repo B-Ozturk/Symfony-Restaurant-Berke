@@ -39,7 +39,7 @@
                     <li class="nav-item" tabindex="-1">
                         <div class="btn-group nav-item">
                             <button class="btn nav-link active text-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> {{ app.user.name }}
+                                <img src="{{ asset('img/profile/'~ app.user.picture) }}" height="30px" width="30px" class="rounded"> {{ app.user.name }}
                             </button>
                             <ul class="dropdown-menu text-light active bg-secondary">
                                 <li class="nav-item">
