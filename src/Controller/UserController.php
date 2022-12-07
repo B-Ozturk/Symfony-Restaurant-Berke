@@ -194,11 +194,11 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_logout');
 
     }
-    
+
     #[Route('/ordercomplete', name:'order_complete')]
     public function userOrderComplete(): Response
     {
         $this->addFlash('success', 'Bestelling is succesvol geplaatst!');
-        return $this->redirectToRoute('user_orders');
+        return $this->redirectToRoute('user_profile');
     }
 }
