@@ -45,13 +45,31 @@ class AdminController extends AbstractController
     }
 
     #[Route('/members/delete/{id}', name: 'delete_member')]
-    public function deleteMember($id, UserRepository $userRepository, ReviewRepository $reviewRepository , EntityManagerInterface $entityManager): Response
+    public function deleteMember(
+        $id, EntityManagerInterface $entityManager,
+        UserRepository $userRepository, ReviewRepository $reviewRepository,
+        OrderRepository $orderRepository, ReservationRepository $reservationRepository
+    ): Response
     {
         $member = $userRepository->find($id);
-        $review = $reviewRepository->findOneBy(['user' => $member->getId()]);
+        $reviews = $reviewRepository->findBy(['user' => $id]);
+        $orders = $orderRepository->findBy(['user' => $id]);
+        $reservations = $reservationRepository->findBy(['user' => $id]);
 
-        if ($review){
-            $entityManager->remove($review);
+        if ($reviews){
+            foreach ($reviews as $rev){
+                $entityManager->remove($rev);
+            }
+        }
+        if ($orders){
+            foreach ($orders as $order){
+                $entityManager->remove($order);
+            }
+        }
+        if ($reservations){
+            foreach ($reservations as $reservation){
+                $entityManager->remove($reservation);
+            }
         }
         if ($member){
             $entityManager->remove($member);
