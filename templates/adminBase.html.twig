@@ -53,6 +53,18 @@
     <div class="jumbotron jumbotron-fluid bg-danger" id="statisticBanner"></div>
 </div>
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-info text-center font-weight-bold">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% block body %}{% endblock %}
 </body>
 </html>

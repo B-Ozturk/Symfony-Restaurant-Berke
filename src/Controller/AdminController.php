@@ -77,11 +77,9 @@ class AdminController extends AbstractController
 
         $entityManager->flush();
 
-        $text = $member->getName() . " is succesvol verwijderd!";
+        $this->addFlash('success', $member->getName() . ' is succesvol verwijderd!');
 
-        return $this->render('admin/action_complete.html.twig', [
-            'text' => $text,
-        ]);
+        return $this->redirectToRoute('admin_members');
     }
 
     #[Route('/menu', name: 'menu')]
@@ -126,19 +124,12 @@ class AdminController extends AbstractController
             $entityManager->persist($menu);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_add_item_complete');
+            $this->addFlash('success', 'Item is succesvol toegevoegd aan het menu!');
+            return $this->redirectToRoute('admin_menu');
         }
 
         return $this->render('admin/add_item.html.twig', [
             'addItemForm' => $form->createView()
-        ]);
-    }
-
-    #[Route('/add_item_complete', name: 'add_item_complete')]
-    public function add_item_complete(): Response
-    {
-        return $this->render('admin/action_complete.html.twig', [
-            'text' => 'Item is succesvol toegevoegd aan het menu',
         ]);
     }
 
@@ -171,11 +162,8 @@ class AdminController extends AbstractController
 
                     $entityManager->flush();
 
-                    $text = $menu_item->getName() . " is succesvol aangepast";
-
-                    return $this->render('admin/action_complete.html.twig', [
-                        'text' => $text,
-                    ]);
+                    $this->addFlash('success', $menu_item->getName() .' is succesvol aangepast!');
+                    return $this->redirectToRoute('admin_menu');
                 }
             }else{
                 $menu_item->setName($form->get('name')->getData());
@@ -185,11 +173,8 @@ class AdminController extends AbstractController
 
                 $entityManager->flush();
 
-                $text = $menu_item->getName() . " is succesvol aangepast";
-
-                return $this->render('admin/action_complete.html.twig', [
-                    'text' => $text,
-                ]);
+                $this->addFlash('success', $menu_item->getName() .' is succesvol aangepast!');
+                return $this->redirectToRoute('admin_menu');
             }
         }
 
@@ -206,11 +191,8 @@ class AdminController extends AbstractController
         $entityManager->remove($menu_item);
         $entityManager->flush();
 
-        $text =  $menu_item->getName() . " is succesvol verwijderd van het menu!";
-
-        return $this->render('admin/action_complete.html.twig', [
-            'text' => $text,
-        ]);
+        $this->addFlash('success', $menu_item->getName() .' is succesvol verwijderd van het menu!');
+        return $this->redirectToRoute('admin_menu');
     }
 
     #[Route('/reservations', name: 'reservations')]
@@ -233,11 +215,8 @@ class AdminController extends AbstractController
         $entityManager->remove($reservation);
         $entityManager->flush();
 
-        $text = "Reservering #" . $id . " is succesvol afgerond!";
-
-        return $this->render('admin/action_complete.html.twig', [
-            'text' => $text,
-        ]);
+        $this->addFlash('success', "Reservering #" . $id . " is succesvol afgerond!");
+        return $this->redirectToRoute('admin_reservations');
     }
 
     #[Route('/orders', name: 'orders')]
@@ -270,11 +249,8 @@ class AdminController extends AbstractController
         $entityManager->remove($order);
         $entityManager->flush();
 
-        $text = "Bestelling " . $id . " is succesvol afgerond!";
-
-        return $this->render('admin/action_complete.html.twig', [
-            'text' => $text,
-        ]);
+        $this->addFlash('success', "Bestelling " . $id . " is succesvol afgerond!");
+        return $this->redirectToRoute('admin_orders');
     }
 
     #[Route('/user/profile/{id}', name: 'member_profile')]
