@@ -29,7 +29,8 @@ class ReviewController extends AbstractController
             $entityManager->persist($review);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_review_complete');
+            $this->addFlash('success', 'Review is succesvol geplaatst!');
+            return $this->redirectToRoute('user_profile');
         }
 
         return new Response($twig->render('user/review.html.twig', ['review_form' => $form->createView()]));

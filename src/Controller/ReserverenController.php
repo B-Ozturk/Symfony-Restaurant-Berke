@@ -28,7 +28,8 @@ class ReserverenController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_reserveren_complete');
+            $this->addFlash('success', 'Reservering is succesvol geplaatst!');
+            return $this->redirectToRoute('user_reserveren');
         }
 
         return new Response($twig->render('reserveren/index.html.twig', ['reservation_form' => $form->createView()]));

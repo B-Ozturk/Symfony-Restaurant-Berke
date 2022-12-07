@@ -76,7 +76,8 @@ class UserController extends AbstractController
                     $user->setPicture($newFileName);
                     $entityManager->flush();
 
-                    return $this->redirectToRoute('user_change_profile_complete');
+                    $this->addFlash('success', 'Profiel is succesvol aangepast!');
+                    return $this->redirectToRoute('user_profile');
                 }
             }
 
@@ -100,7 +101,8 @@ class UserController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->redirectToRoute('user_change_profile_complete');
+        $this->addFlash('success', 'Profiel foto is succesvol verwijderd!');
+        return $this->redirectToRoute('user_profile');
     }
 
     #[Route('/profile/password', name: 'edit_password')]
@@ -121,7 +123,8 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('user_change_profile_complete');
+                $this->addFlash('success', 'Wachtwoord is succesvol gewijzigd!');
+                return $this->redirectToRoute('user_profile');
             } else {
                 echo "<script>alert('Ingevoerde wachtwoorden komen niet overeen!')</script>";
             }
@@ -191,48 +194,11 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_logout');
 
     }
-
-
-    #[Route('/profile/complete', name: 'change_profile_complete')]
-    public function userProfileChangeComplete(): Response
-    {
-        return $this->render('user/action_complete.html.twig', [
-            'text' => 'Profiel is succesvol aangepast!'
-        ]);
-    }
-
+    
     #[Route('/ordercomplete', name:'order_complete')]
     public function userOrderComplete(): Response
     {
-        return $this->render('user/action_complete.html.twig', [
-        'text' => 'Uw bestelling wordt klaar gemaakt en naar u verzonden!'
-        ]);
-    }
-
-    //  User review complete
-    #[Route('/reviewcomplete', name: 'review_complete')]
-    public function userReviewComplete(): Response
-    {
-        return $this->render('user/action_complete.html.twig', [
-            'text' => 'Uw review is successvol geplaatst!'
-        ]);
-    }
-
-    //  User reserveren complete
-    #[Route('/reserverencomplete', name: 'reserveren_complete')]
-    public function userReserverenComplete(): Response
-    {
-        return $this->render('user/action_complete.html.twig', [
-            'text' => 'Uw reservering is successvol geplaatst!'
-        ]);
-    }
-
-    //  User bestellen complete
-    #[Route('/bestellencomplete', name: 'bestellen_complete')]
-    public function userBestellenComplete(): Response
-    {
-        return $this->render('user/action_complete.html.twig', [
-            'text' => 'Uw bestelling is successvol geplaatst!'
-        ]);
+        $this->addFlash('success', 'Bestelling is succesvol geplaatst!');
+        return $this->redirectToRoute('user_orders');
     }
 }
