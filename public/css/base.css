@@ -13,14 +13,16 @@
     height: 100px;
 }
 
-.nav-item{
-    font-weight: normal;
-}
+/*.nav-item{*/
+/*    font-weight: normal;*/
+/*    color: #FFFFFF;*/
+/*}*/
 
-.nav-item:hover{
-    font-weight: bolder;
-    font-size: 20px;
-}
+/*.nav-item:hover{*/
+/*    font-weight: bolder;*/
+/*    color: #c5c8c8;*/
+/*    !*color: red;*!*/
+/*}*/
 
 /* Jumbotron css */
 #banner{
