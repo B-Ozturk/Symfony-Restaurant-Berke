@@ -27,3 +27,97 @@
     width: 50px;
     height: 50px;
 }
+
+/* User Bestellen detail pagina css*/
+.symfony_product_detail{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.symfony_product_detail_form{
+    background-color: #dedede;
+}
+
+.symfony_product_detail_form div[type=submit]{
+    border-radius: 50px;
+    border: 2px solid black;
+    background-color: #258afd;
+    font-weight: bold;
+    width: 25%;
+}
+
+/* User Reservation pagina CSS */
+.symfony_reservation_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_reservation_form .form-group {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.symfony_reservation_form .form-group > select {
+    background-color: #eeeeee;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.symfony_reservation_form input[type=submit]{
+    border-radius: 50px;
+    border: 2px solid black;
+    background-color: #258afd;
+    font-weight: bold;
+    width: 100%;
+}
+
+/* User review pagina CSS */
+.symfony_review_form ::marker{
+    color: #ff0000;
+    background-color: #258afd;
+}
+
+.symfony_review_form{
+    background-color: #dedede;
+    border-radius: 15px;
+    border: 2px solid black;
+    box-shadow: 2px 4px;
+    padding: 15px;
+}
+
+.symfony_review_form > textarea{
+    background-color: #eeeeee;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 600px;
+    height: 70px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: fill;
+    margin-bottom: 5px;
+}
+
+.symfony_review_form > h5{
+    font-weight: bold;
+}
+
+.symfony_review_form .form-group > div {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}

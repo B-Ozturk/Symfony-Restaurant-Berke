@@ -35,7 +35,7 @@ class CartController extends AbstractController
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('cart');
+            return $this->redirectToRoute('user_cart');
         }
 
         return $this->render('cart/index.html.twig', [
