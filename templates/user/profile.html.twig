@@ -33,9 +33,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <a href="{{ path('user_delete_profile_picture') }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Foto verwijderen</a>
-            </div>
+{#            Knop alleen beschikbaar als profiel foto niet default is #}
+            {% if user.picture != 'defaultProfile.png' %}
+                <div class="col-md-3">
+                    <a href="{{ path('user_delete_profile_picture') }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Foto verwijderen</a>
+                </div>
+            {% endif %}
+
             <div class="col-md-3">
                 <a href="{{ path('user_edit_profile') }}" class="btn btn-warning"><i class="fa-solid fa-user-pen"></i> Profiel aanpassen</a>
             </div>

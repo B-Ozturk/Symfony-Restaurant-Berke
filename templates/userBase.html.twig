@@ -65,18 +65,12 @@
     <div class="jumbotron jumbotron-fluid bg-danger" id="statisticBanner"></div>
 </div>
 
-{% for success in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ success }}
-    </div>
-{% endfor %}
-
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            {% for message in app.flashes('success') %}
+            {% for success in app.flashes('success') %}
                 <div class="alert alert-info text-center font-weight-bold">
-                    {{ message }}
+                    {{ success }}
                 </div>
             {% endfor %}
         </div>

@@ -15,6 +15,7 @@ use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -48,13 +49,18 @@ class AdminController extends AbstractController
     public function deleteMember(
         $id, EntityManagerInterface $entityManager,
         UserRepository $userRepository, ReviewRepository $reviewRepository,
-        OrderRepository $orderRepository, ReservationRepository $reservationRepository
+        OrderRepository $orderRepository, ReservationRepository $reservationRepository,
+        Filesystem $filesystem
     ): Response
     {
         $member = $userRepository->find($id);
         $reviews = $reviewRepository->findBy(['user' => $id]);
         $orders = $orderRepository->findBy(['user' => $id]);
         $reservations = $reservationRepository->findBy(['user' => $id]);
+
+        $picture = $member->getPicture();
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
 
         if ($reviews){
             foreach ($reviews as $rev){

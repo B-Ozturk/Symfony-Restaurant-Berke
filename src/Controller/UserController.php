@@ -12,6 +12,7 @@ use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -93,12 +94,16 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/picture/delete', name: 'delete_profile_picture')]
-    public function userProfilePicture(EntityManagerInterface $entityManager): Response
+    public function userProfilePicture(EntityManagerInterface $entityManager, Filesystem $filesystem): Response
     {
         $user = $this->getUser();
 
-        $user->setPicture('defaultProfile.png');
+        $picture = $user->getPicture();
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
 
+
+        $user->setPicture('defaultProfile.png');
         $entityManager->flush();
 
         $this->addFlash('success', 'Profiel foto is succesvol verwijderd!');
@@ -170,21 +175,39 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/delete/{id}', name: 'delete_profile')]
-    public function deleteProfile($id, UserRepository $userRepository, ReviewRepository $reviewRepository , EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
+    public function deleteProfile
+    (   $id, UserRepository $userRepository, ReviewRepository $reviewRepository,
+        EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage,
+        SessionInterface $session, Filesystem $filesystem, OrderRepository $orderRepository,
+        ReservationRepository $reservationRepository,
+    ): Response
     {
         $user = $userRepository->find($id);
-        $review = $reviewRepository->findOneBy(['user' => $user]);
+        $reviews = $reviewRepository->findBy(['user' => $user]);
+        $orders = $orderRepository->findBy(['user' => $user]);
+        $reservations = $reservationRepository->findBy(['user' => $user]);
 
-        if ($review){
-            $entityManager->remove($review);
-        } else {
-//            nothing
+        $picture = $user->getPicture();
+        $projectDir = $this->getParameter('kernel.project_dir');
+        $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+
+        if ($reviews){
+            foreach ($reviews as $rev){
+                $entityManager->remove($rev);
+            }
         }
-
+        if ($orders){
+            foreach ($orders as $order){
+                $entityManager->remove($order);
+            }
+        }
+        if ($reservations){
+            foreach ($reservations as $reservation){
+                $entityManager->remove($reservation);
+            }
+        }
         if ($user){
             $entityManager->remove($user);
-        } else {
-//            if the user doesn't exist something went wrong while writing this code
         }
 
         $entityManager->flush();

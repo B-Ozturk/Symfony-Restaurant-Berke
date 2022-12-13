@@ -6,30 +6,12 @@
 /* Navbar css */
 .navbar{
     background-color: #0B345A;
-    color: red;
 }
 
 .navLogo{
     width: 100px;
     height: 100px;
 }
-
-/*.nav-item{*/
-/*    font-weight: normal;*/
-/*    color: #FFFFFF;*/
-/*}*/
-
-/*.nav-item:hover{*/
-/*    font-weight: bolder;*/
-/*    color: #c5c8c8;*/
-/*    !*color: red;*!*/
-/*}*/
-
-/*.navbar a:hover, .dropdown:hover .dropbtn {*/
-/*    font-weight: bolder;*/
-/*    color: #FFFFFF;*/
-/*    font-size: 20px;*/
-/*}*/
 
 /* Default CSS for all forms*/
 .form-group{
