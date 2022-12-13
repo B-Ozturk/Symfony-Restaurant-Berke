@@ -4,7 +4,9 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Winkelwagen</h1>
+        <div class="alert alert-primary text-center" role="alert">
+            <strong>Winkelwagen</strong>
+        </div>
         {% if cart.items.count > 0 %}
             <div class="row mt-4">
                 <div class="col-md-8">
@@ -65,7 +67,7 @@
                 </div>
             </div>
         {% else %}
-            <div class="alert alert-info">
+            <div class="alert alert-warning font-weight-bold">
                 Je winkelwagen is leeg ga naar de <a href="{{ path('user_bestellen') }}">producten lijst</a>.
             </div>
         {% endif %}

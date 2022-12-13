@@ -2,6 +2,13 @@
 {% block title %}Profile | Restaurant Berke{% endblock %}
 {% block body %}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-primary text-center" role="alert">
+                    <strong>Hier kan je je profiel tot op in de detail bekijken</strong>
+                </div>
+            </div>
+        </div>
         <div class="row mb-2">
             <div class="col-md-6">
                 <a href="{{ path('user_reservations', {id: user.id}) }}" class="btn btn-info"><i class="fa-solid fa-clock-rotate-left"></i> Bekijk alle reserveringen</a>

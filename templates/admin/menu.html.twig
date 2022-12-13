@@ -2,12 +2,17 @@
 {% block title %}Menu | Restaurant Berke{% endblock %}
 {% block body %}
     <div class="container">
-        <h1 class="text-center">Menu</h1>
+{#        <h1 class="text-center">Menu</h1>#}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info text-center font-weight-bold" aria-label="alert">
+                    <h1>Menu</h1><br>Er zijn in totaal {{ menus|length }} items in de menu
+                </div>
+            </div>
+        </div>
         <center>
             <a href="{{ path('admin_add_item') }}" class="btn btn-info add_item_button"><i class="fa-solid fa-plus"></i> Voeg item toe</a>
         </center>
-
-        <h3 class="text-center">Er zijn in totaal {{ menus|length }} items in de menu</h3><br>
         <div class="row gy-3">
             {%  for menu in menus %}
                 <div class=" col-12 col-md-4">

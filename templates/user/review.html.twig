@@ -4,13 +4,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div class="alert alert-primary text-center" role="alert">
+                    <strong><h5 class="text-center">Hier kan je een review achterlaten.</h5><small>LET OP! HET IS NIET ANONIEM.</small></strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <center>
                     {{ form_start(review_form) }}
                     <div class="symfony_review_form">
-                        <h5 class="text-center">
-                            Hier kan je een review achterlaten.
-                        </h5>
-                        <small>LET OP! HET IS NIET ANONIEM.</small>
                         <div class="form-group">
                             {{ form_row(review_form.message) }}
                         </div>

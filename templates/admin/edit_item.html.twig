@@ -4,7 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="alert alert-primary text-center" role="alert">
+                    <strong>Pas hier het menu item aan</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="symfony_edit_item_form">
                     {{ form_start(form) }}
                     <div class="form-group">
                         {{ form_row(form.name) }}

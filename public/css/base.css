@@ -1,11 +1,16 @@
 #bdy{
-    background-color: #b7b7b7;
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow: initial;
 }
 
 /* Navbar css */
 .navbar{
-    background-color: #0B345A;
+    background: #0f0c29;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    overflow: initial;
 }
 
 .navLogo{
@@ -61,7 +66,9 @@ textarea{
 }
 
 #statisticBanner{
+    background-color: transparent;
     padding-top: 100px;
+    height: 50px;
 }
 
 /* Homepage css */
@@ -70,7 +77,7 @@ textarea{
     background-color: #cecece;
     border-radius: 15px;
     border: 2px solid black;
-    box-shadow: 2px 3px black;
+    box-shadow: 1px 1px #d3ae00;
 }
 
 #clock{
@@ -80,7 +87,7 @@ textarea{
 /* Review css */
 .card{
     border: 2px solid black;
-    box-shadow: 2px 4px black;
+    box-shadow: 1px 1px #d3ae00;
     border-radius: 15px;
 }
 
@@ -95,8 +102,8 @@ textarea{
 
 iframe{
     border: 2px solid black;
+    box-shadow: 1px 1px #d3ae00;
     border-radius: 15px;
-    box-shadow: 2px 4px;
     width: 100%;
     height: 60%;
     margin-left: 5px;
@@ -107,14 +114,14 @@ iframe{
     background-color: #cecece;
     border-radius: 15px;
     border: 2px solid black;
-    box-shadow: 2px 3px black;
+    box-shadow: 1px 1px #d3ae00;
 }
 
 table,tr,td{
     background-color: #c4c4c4;
-    box-shadow: 2px 4px;
+    border: 2px solid black;
+    box-shadow: 1px 1px #d3ae00;
     border-collapse: collapse;
-    border: 2px solid #000000;;
     margin-bottom: 20px;
     align-content: flex-end;
 }
@@ -123,7 +130,7 @@ table,tr,td{
     background-color: #dedede;
     border-radius: 15px;
     border: 2px solid black;
-    box-shadow: 2px 4px;
+    box-shadow: 1px 1px #d3ae00;
     padding: 15px;
 }
 
@@ -143,7 +150,7 @@ table,tr,td{
     background-color: #dedede;
     border-radius: 15px;
     border: 2px solid black;
-    box-shadow: 2px 4px;
+    box-shadow: 1px 1px #d3ae00;
     padding: 15px;
 }
 

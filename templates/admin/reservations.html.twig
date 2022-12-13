@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center">Er zijn {{ todaysReservations|length }} reserveringen voor vandaag</h3>
+            <div class="alert alert-primary text-center" role="alert">
+                <strong>Er zijn {{ todaysReservations|length }} reserveringen voor vandaag</strong>
+            </div>
         </div>
     </div>
     <div class="row">
