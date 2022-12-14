@@ -36,15 +36,14 @@ class RestaurantController extends AbstractController
     }
 
 //    Item pagina
-    #[Route('menu/{category.id}', name: 'app_item', methods:['GET', 'HEAD'])]
-    public function item(MenuRepository $MenuRepository):Response
+    #[Route('menu/{id}', name: 'app_item', methods:['GET', 'HEAD'])]
+    public function item($id, MenuRepository $MenuRepository, CategoryRepository $categoryRepository):Response
     {
-        $category_id = $_GET['id'];
-
-        $items = $MenuRepository->findBy(['category' => $category_id]);
+        $category = $categoryRepository->findOneBy(['id' => $id]);
+        $items = $MenuRepository->findBy(['category' => $id]);
 
         return $this->render('restaurant/item.html.twig', [
-            'items' => $items
+            'items' => $items, 'category' => $category
         ]);
     }
 

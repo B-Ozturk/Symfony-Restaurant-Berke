@@ -2,6 +2,16 @@
 {% block title %}{% endblock %}
 {% block body %}
     <div class="container">
+        <div class="row symfony_review_form mb-3">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_menu') }}">Categoriën</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-primary text-center" role="alert">
@@ -12,16 +22,16 @@
         <div class="row gy-3">
             {%  for item in items %}
                 <div class=" col-12 col-md-6">
-                    <a href="{{ path('item_detail', {id: item.id}) }}">
-                        <div class="card text-center border-dark m-3" style="width: 20rem;">
+                    <div class="card text-center border-dark m-3" style="width: 20rem;">
+                        <a href="{{ path('item_detail', {id: item.id}) }}" class="item_detail">
                             <div class="card-body">
                                 <img src="../img/menu/{{ item.picture }}" class="card-img-top rounded" alt="{{ item.name }}" width="200px" height="175px">
                                 <h4 class="card-title ">{{ item.name }}</h4>
                                 <h6 class="card-text ">{{ item.description }}</h6>
                                 <h6 class="card-text ">€{{ item.price }}</h6>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

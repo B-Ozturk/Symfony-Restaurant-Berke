@@ -3,6 +3,17 @@
 {% block body %}
     <div class="container">
         <div class="row symfony_review_form">
+            <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_menu') }}">Categoriën</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path("app_item", {id: menuItem.category.id}) }}">Items</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ menuItem.name }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row symfony_review_form">
             <div class="col-md-5">
                 <img src="{{ asset('img/menu/'~menuItem.picture) }}" alt="{{ menuItem.name }}" class="rounded mt-3 border-dark" width="300" height="200">
                 <h4 class="mt-4 font-weight-bold">{{ menuItem.name }}</h4>
