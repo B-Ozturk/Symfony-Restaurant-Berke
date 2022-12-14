@@ -46,10 +46,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MenuReview::class)]
+    private Collection $menuReviews;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
         $this->bestellingen = new ArrayCollection();
+        $this->menuReviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,6 +205,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MenuReview>
+     */
+    public function getMenuReviews(): Collection
+    {
+        return $this->menuReviews;
+    }
+
+    public function addMenuReview(MenuReview $menuReview): self
+    {
+        if (!$this->menuReviews->contains($menuReview)) {
+            $this->menuReviews->add($menuReview);
+            $menuReview->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuReview(MenuReview $menuReview): self
+    {
+        if ($this->menuReviews->removeElement($menuReview)) {
+            // set the owning side to null (unless already changed)
+            if ($menuReview->getUser() === $this) {
+                $menuReview->setUser(null);
+            }
+        }
 
         return $this;
     }

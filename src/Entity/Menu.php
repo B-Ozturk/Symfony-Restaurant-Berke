@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MenuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,16 @@ class Menu
     #[ORM\ManyToOne(inversedBy: 'menus')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
+
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: MenuReview::class, orphanRemoval: true)]
+    private Collection $menuReviews;
+
+    public function __construct()
+    {
+        $this->menuReviews = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -91,6 +103,36 @@ class Menu
     public function setCategory(?category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MenuReview>
+     */
+    public function getMenuReviews(): Collection
+    {
+        return $this->menuReviews;
+    }
+
+    public function addMenuReview(MenuReview $menuReview): self
+    {
+        if (!$this->menuReviews->contains($menuReview)) {
+            $this->menuReviews->add($menuReview);
+            $menuReview->setMenu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenuReview(MenuReview $menuReview): self
+    {
+        if ($this->menuReviews->removeElement($menuReview)) {
+            // set the owning side to null (unless already changed)
+            if ($menuReview->getMenu() === $this) {
+                $menuReview->setMenu(null);
+            }
+        }
 
         return $this;
     }

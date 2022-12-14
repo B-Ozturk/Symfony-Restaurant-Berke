@@ -1,0 +1,32 @@
+{% extends 'userBase.html.twig' %}
+{% block title %}Menu Review | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-primary text-center" role="alert">
+                    <strong><h5>Hier kan je een review over dit item achterlaten</h5><small>LET OP! HET IS NIET ANONIEM.</small></strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <center>
+                    {{ form_start(menuReview) }}
+                    <div class="symfony_review_form">
+                        <div class="form-group">
+                            {{ form_row(menuReview.message) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(menuReview.stars) }}
+                        </div>
+                        <div class="form-group">
+                            <input class="btn" type="submit" value="Send">
+                        </div>
+                    </div>
+                    {{ form_end(menuReview) }}
+                </center>
+            </div>
+        </div>
+    </div>
+{% endblock %}
