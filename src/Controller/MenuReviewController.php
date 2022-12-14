@@ -18,6 +18,8 @@ class MenuReviewController extends AbstractController
     #[Route('/product/{id}/review', name: 'product_review')]
     public function userProductReview($id, MenuRepository $menuRepository,Environment $twig, Request $request, EntityManagerInterface $entityManager): Response
     {
+        $menuItem = $menuRepository->findOneBy(['id' => $id]);
+
         $menuReview = new MenuReview();
 
         $form = $this->createForm(MenuReviewType::class, $menuReview);
@@ -26,16 +28,14 @@ class MenuReviewController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $menuReview->setUser($this->getUser());
             $menuReview->setDate(new \DateTimeImmutable());
-            $menuReview->setMenu($id);
-            $menuReview->setMessage($form->getData('message'));
-            $menuReview->setStars($form->getData('stars'));
+            $menuReview->setMenu($menuItem);
 
             $entityManager->persist($menuReview);
             $entityManager->flush();
 
             $this->addFlash('success', 'Review is succesvol geplaast!');
-            return $this->redirectToRoute('user_product_review');
+            return $this->redirectToRoute('user_bestellen');
         }
-        return new Response($twig->render('menu_review/menuReview.html.twig', ['menuReview' => $form->createView()]));
+        return new Response($twig->render('menu_review/menuReview.html.twig', ['menuReview' => $form->createView(), 'menuItem' => $menuItem]));
     }
 }
