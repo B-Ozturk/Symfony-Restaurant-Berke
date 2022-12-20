@@ -14,11 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 class ContactController extends AbstractController
 {
     #[Route('/contact')]
-    public function contact(OpeningstijdenRepository $OpeningstijdenRepository, Request $request, MailerInterface $mailer): Response
+    public function contact(OpeningstijdenRepository $openingstijdenRepository, Request $request, MailerInterface $mailer): Response
     {
 //        Code voor het ophalen van de openingstijden tabel uit de database
-        $openingstijdenrepo = $OpeningstijdenRepository;
-        $openingstijden = $openingstijdenrepo->findAll();
+        $openingstijden = $openingstijdenRepository->findAll();
 
 //       Code voor het handelen van de contact form
         $form = $this->createForm(ContactType::class);
