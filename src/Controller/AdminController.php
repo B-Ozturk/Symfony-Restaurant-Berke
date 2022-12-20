@@ -4,36 +4,37 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Entity\Order;
-use App\Entity\OrderItem;
-use App\Entity\Reservation;
 use App\Form\MenuItemType;
 use App\Repository\MenuRepository;
+use App\Repository\OpeningstijdenRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Environment;
+
 
 #[Route('/admin', name: 'admin_')]
 class AdminController extends AbstractController
 {
     #[Route('/home', name: 'home')]
-    public function index(): Response
+    public function index(OpeningstijdenRepository $openingstijdenRepository): Response
     {
+        $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
+
         return $this->render('admin/home.html.twig', [
-            'controller_name' => 'AdminController',
+            'openingstijden' => $openingstijden,
         ]);
     }
+
+
 
     #[Route('/members', name: 'members')]
     public function showMembers(UserRepository $userRepository, EntityManagerInterface $entityManager): Response

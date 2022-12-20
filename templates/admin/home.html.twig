@@ -52,7 +52,22 @@
                 <br>
                 <h4 id="clock" class="text-center" onload="currentTime()"></h4>
             </div>
-
+            <div class="container mt-4 ml-5">
+                <table id="openingsTijdenTabel">
+                    <tr>
+                        <th scope="col" class="text-center h5 font-weight-bold">Dag</th>
+                        <th scope="col" class="text-center h5 font-weight-bold">Tijd</th>
+                        <th scope="col"></th>
+                    </tr>
+                    {% for info in openingstijden %}
+                        <tr>
+                            <td><strong class="mx-2">{{ info.day }}</strong></td>
+                            <td><strong class="mx-2">{{ info.time }}</strong></td>
+                            <td><a href="{{ path('admin_times', {id: info.id}) }}" class="btn btn-warning mx-4 my-1"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 
