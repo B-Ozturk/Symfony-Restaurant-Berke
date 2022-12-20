@@ -4,8 +4,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
-use App\Form\RegistrationFormType;
-use App\Repository\MenuRepository;
+use App\Repository\OpeningstijdenRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ReservationRepository;
@@ -16,7 +15,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -28,10 +26,12 @@ class UserController extends AbstractController
 {
 //  User home page
     #[Route('/home', name: 'home')]
-    public function userHome(): Response
+    public function userHome(OpeningstijdenRepository $openingstijdenRepository): Response
     {
+        $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
+
         return $this->render('user/home.html.twig', [
-            'test' => 'als je dit ziet dan werkt het'
+            'openingstijden' => $openingstijden,
         ]);
     }
 
