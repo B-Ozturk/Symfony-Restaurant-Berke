@@ -32,6 +32,7 @@ class ProductController extends AbstractController
 
             $CartManager->save($cart);
 
+            $this->addFlash('success', $menu->getName() . ' is succesvol toegevoegd aan uw winkelwagen!');
             return $this->redirectToRoute('user_productdetail', ['id' => $menu->getId()]);
         }
 
