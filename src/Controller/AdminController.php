@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Entity\Openingstijden;
 use App\Entity\Order;
 use App\Form\MenuItemType;
+use App\Form\OpeningstijdenType;
 use App\Repository\MenuRepository;
 use App\Repository\OpeningstijdenRepository;
 use App\Repository\OrderItemRepository;
@@ -34,7 +36,30 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/openingstijden/{id}', name: 'times')]
+    public function times($id, OpeningstijdenRepository $openingstijdenRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $day = $openingstijdenRepository->findOneBy(['id' => $id]);
 
+        $form = $this->createForm(OpeningstijdenType::class, $day);
+        $openingstijden = new Openingstijden();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $openingstijden->setDay($day->getDay());
+            $openingstijden->setstartTime($form->get('startTime')->getData());
+            $openingstijden->setendTime($form->get('endTime')->getData());
+//            $entityManager->persist($openingstijden);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Openingstijden zijn succesvol gewijzigd!');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        return $this->render('admin/openingstijd.html.twig', [
+            'day' => $day, 'openingstijdenForm' => $form->createView()
+        ]);
+    }
 
     #[Route('/members', name: 'members')]
     public function showMembers(UserRepository $userRepository, EntityManagerInterface $entityManager): Response
