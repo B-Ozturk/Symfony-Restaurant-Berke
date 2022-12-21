@@ -39,12 +39,14 @@
                     <table id="openingsTijdenTabel">
                         <tr>
                             <th>Dag</th>
-                            <th>Tijd</th>
+                            <th>Openingstijd</th>
+                            <th>Sluitingstijd</th>
                         </tr>
                         {% for info in openingstijden %}
                         <tr>
                             <td>{{ info.day }}</td>
-                            <td>{{ info.time }}</td>
+                            <td>{{ info.startTime|date('H:i') }}</td>
+                            <td>{{ info.endTime|date('H:i') }}</td>
                         </tr>
                         {% endfor %}
                     </table>
