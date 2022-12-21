@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OpeningstijdenRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OpeningstijdenRepository::class)]
@@ -16,8 +17,11 @@ class Openingstijden
     #[ORM\Column(length: 255)]
     private ?string $day = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $time = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $startTime = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $endTime = null;
 
     public function getId(): ?int
     {
@@ -36,14 +40,26 @@ class Openingstijden
         return $this;
     }
 
-    public function getTime(): ?string
+    public function getstartTime(): ?\DateTimeInterface
     {
-        return $this->time;
+        return $this->startTime;
     }
 
-    public function setTime(string $time): self
+    public function setstartTime(\DateTimeInterface $startTime): self
     {
-        $this->time = $time;
+        $this->startTime = $startTime;
+
+        return $this;
+    }
+
+    public function getendTime(): ?\DateTimeInterface
+    {
+        return $this->endTime;
+    }
+
+    public function setendTime(\DateTimeInterface $endTime): self
+    {
+        $this->endTime = $endTime;
 
         return $this;
     }
