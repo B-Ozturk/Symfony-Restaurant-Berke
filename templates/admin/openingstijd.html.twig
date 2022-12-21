@@ -1,0 +1,30 @@
+{% extends 'adminBase.html.twig' %}
+{% block title %}Edit Time | Restaurant Berke{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-primary text-center" role="alert">
+                    <strong>Pas hier de openingstijden van {{ day.day}} aan.</strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="symfony_edit_item_form">
+                    {{ form_start(openingstijdenForm) }}
+                    <div class="form-group">
+                        {{ form_row(openingstijdenForm.startTime) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(openingstijdenForm.endTime) }}
+                    </div>
+                    <div class="form-group">
+                        <input class="btn" type="submit" value="Opslaan">
+                    </div>
+                    {{ form_end(openingstijdenForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
