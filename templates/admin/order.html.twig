@@ -16,10 +16,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% set price =0 %}
                     {% if order.items|length != 0 %}
                     {% set number= 1 %}
                     {% set total=0 %}
-                    {% set price=0 %}
                     {% set counter= 0 %}
                     {% for item in order.items %}
                         <tr>
