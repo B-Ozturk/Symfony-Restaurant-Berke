@@ -214,14 +214,7 @@ class UserController extends AbstractController
         $tokenStorage->setToken(null);
         $session->invalidate();
 
+        $this->addFlash('success', 'Uw profiel is succesvol verwijderd!');
         return $this->redirectToRoute('app_logout');
-
-    }
-
-    #[Route('/ordercomplete', name:'order_complete')]
-    public function userOrderComplete(): Response
-    {
-        $this->addFlash('success', 'Bestelling is succesvol geplaatst!');
-        return $this->redirectToRoute('user_profile');
     }
 }
