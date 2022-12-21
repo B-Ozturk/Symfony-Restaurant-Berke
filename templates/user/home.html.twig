@@ -2,10 +2,10 @@
 {% block title %} Home | Restaurant Berke {% endblock %}
 {% block body %}
     <div class="container">
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-md-6">
             <div class="text_info">
-                <strong><h5>Hey {{ app.user.name }}, how are you?</h5></strong><br>
+                <strong><h5 class="my-5">Hey {{ app.user.name }}, how are you?</h5></strong>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lobortis, ante quis lacinia eleifend,
                 odio lacus dignissim purus, luctus finibus arcu elit eget orci. Ut quis vestibulum leo. Nullam
                 quis sem lectus. Fusce finibus sit amet metus nec venenatis. Maecenas at volutpat tortor, at
@@ -21,8 +21,8 @@
                 fringilla ornare, purus arcu porta elit, in fermentum sapien nunc eu massa. Morbi vitae fringilla nisi.
             </div>
         </div>
-        <div class="col-md-6">
-            <div id="main">
+        <div class="col-md-6" id="main">
+            <div >
                 <div class="row" style="padding:10px;">
                     <div class="img col-3">
                         <img src="" id="img">
@@ -52,16 +52,18 @@
                 <br>
                 <h4 id="clock" class="text-center" onload="currentTime()"></h4>
             </div>
-            <div class="container mt-4 ml-5">
+            <div class="container mt-4 mx-5">
                 <table id="openingsTijdenTabel">
                     <tr>
-                        <th scope="col" class="text-center h5 font-weight-bold">Dag</th>
-                        <th scope="col" class="text-center h5 font-weight-bold">Tijd</th>
+                        <th scope="col" class="text-center h5 font-weight-bold mx-5">Dag</th>
+                        <th scope="col" class="text-center h5 font-weight-bold mx-5">Openingstijd</th>
+                        <th scope="col" class="text-center h5 font-weight-bold mx-5">Sluitingstijd</th>
                     </tr>
                     {% for info in openingstijden %}
                         <tr>
                             <td><strong class="mx-2">{{ info.day }}</strong></td>
-                            <td><strong class="mx-2">{{ info.time }}</strong></td>
+                            <td><strong class="mx-2">{{ info.startTime|date('H:i') }}</strong></td>
+                            <td><strong class="mx-2">{{ info.endTime|date('H:i') }}</strong></td>
                         </tr>
                     {% endfor %}
                 </table>
