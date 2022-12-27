@@ -29,6 +29,8 @@ class ProductController extends AbstractController
                 ->addItem($item)
                 ->setUpdatedAt(new \DateTime());
             $cart->setUser($this->getUser());
+            $cart->setTotalPrice($cart->getTotal());
+
 
             $CartManager->save($cart);
 

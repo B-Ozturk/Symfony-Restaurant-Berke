@@ -34,6 +34,8 @@ class CartManager
 
     private $user;
 
+    private $totalPrice;
+
     /**
      * CartManager constructor.
      *
@@ -68,6 +70,24 @@ class CartManager
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param mixed $totalPrice
+     * @return CartManager
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
         return $this;
     }
 

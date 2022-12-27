@@ -33,6 +33,9 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column]
+    private ?int $total_price = null;
+
     /**
      * An order that is in progress, not placed yet.
      *
@@ -162,6 +165,18 @@ class Order
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTotalPrice(): ?int
+    {
+        return $this->total_price;
+    }
+
+    public function setTotalPrice(int $total_price): self
+    {
+        $this->total_price = $total_price;
 
         return $this;
     }

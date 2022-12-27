@@ -35,6 +35,7 @@ class CartController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $cart->setUpdatedAt(new \DateTime());
             $cart->setUser($this->getUser());
+            $cart->setTotalPrice($cart->getTotal());
 
             $this->entityManager->persist($cart);
             $this->entityManager->flush();
