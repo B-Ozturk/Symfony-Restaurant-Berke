@@ -36,6 +36,9 @@ class Order
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     private ?float $total_price = null;
 
+    #[ORM\Column]
+    private ?bool $discount = null;
+
     /**
      * An order that is in progress, not placed yet.
      *
@@ -177,6 +180,18 @@ class Order
     public function setTotalPrice(float $total_price): self
     {
         $this->total_price = $total_price;
+
+        return $this;
+    }
+
+    public function isDiscount(): ?bool
+    {
+        return $this->discount;
+    }
+
+    public function setDiscount(bool $discount): self
+    {
+        $this->discount = $discount;
 
         return $this;
     }
