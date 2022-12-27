@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/user', name: 'user')]
+#[Route('/user', name: 'user_')]
 class CartController extends AbstractController
 {
 
@@ -24,7 +24,7 @@ class CartController extends AbstractController
     {
     }
 
-    #[Route('/cart', name: '_cart')]
+    #[Route('/cart', name: 'cart')]
     public function index(CartManager $cartManager, Request $request): Response
     {
         $cart = $cartManager->getCurrentCart();
@@ -49,8 +49,8 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/order/payment', name:'_order_payment')]
-    public function userOrderComplete(CartManager $cartManager, OrderItemRepository $orderItemRepository ,Request $request): Response
+    #[Route('/order/payment', name:'order_payment')]
+    public function userOrderPayment(CartManager $cartManager, OrderItemRepository $orderItemRepository ,Request $request, EntityManagerInterface $entityManager): Response
     {
         // Discount coupons are being declared here
         $actie = 'BERKE20'; // This is the discountcode
@@ -68,16 +68,22 @@ class CartController extends AbstractController
         $totalPrice = $cart->getTotalPrice();
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $inputCode = $form->get('couponCode')->getData();
 
-            if ($actie == $inputCode){
-                $finalPrice = $totalPrice * 0.80;
-            } else {
-                $this->addFlash('warning', 'Kortingscode is niet geldig!');
+            if ($cart->isDiscount() === false){
+                if ($actie == $inputCode){
+                    $finalPrice = $totalPrice * 0.80;
+                    $cart->setTotalPrice($finalPrice);
+                    $cart->setDiscount(true);
+                    $entityManager->flush();
+                } else {
+                    $this->addFlash('warning', 'Kortingscode is niet geldig!');
+                    return $this->redirectToRoute('user_order_payment');
+                }
+            } elseif ($cart->isDiscount() === true){
+                $this->addFlash('warning', 'Je kan maar 1x korting toepassen!');
                 return $this->redirectToRoute('user_order_payment');
             }
-
         }else{
             $finalPrice = $totalPrice;
         }
@@ -85,6 +91,12 @@ class CartController extends AbstractController
         return $this->render('bestellen/index.html.twig', [
             'actie' => $actie, 'finalPrice' => $finalPrice ,'order' => $items, 'amount_array' => $orderItemQuantity, 'form' => $form->createView()
         ]);
+    }
 
+    #[Route('/ordercomplete', name:'order_complete')]
+    public function userOrderComplete(): Response
+    {
+        $this->addFlash('success', 'Bestelling is succesvol geplaatst!');
+        return $this->redirectToRoute('user_profile');
     }
 }

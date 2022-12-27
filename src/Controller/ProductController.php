@@ -30,6 +30,7 @@ class ProductController extends AbstractController
                 ->setUpdatedAt(new \DateTime());
             $cart->setUser($this->getUser());
             $cart->setTotalPrice($cart->getTotal());
+            $cart->setDiscount(false);
 
 
             $CartManager->save($cart);
