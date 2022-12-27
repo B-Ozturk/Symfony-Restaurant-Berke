@@ -52,9 +52,8 @@ class CartController extends AbstractController
     #[Route('/order/payment', name:'_order_payment')]
     public function userOrderComplete(CartManager $cartManager, OrderItemRepository $orderItemRepository ,Request $request): Response
     {
-        // Default variables
+        // Discount coupons are being declared here
         $actie = 'BERKE20'; // This is the discountcode
-        $totalPrice = 0;
 
         // Form is being declared here
         $form = $this->createForm(PaymentFormType::class);
@@ -65,17 +64,15 @@ class CartController extends AbstractController
         $items = $orderItemRepository->findBy(['orderRef' => $cart]);
         $orderItemQuantity = array_map(function ($o){ return $o->getQuantity(); }, $items);
 
-        foreach ($items as $item){
-            $product = $item->getProduct();
-            $totalPrice += $product->getPrice() * $item->getQuantity();
-        }
+        // Total price is being declared here
+        $totalPrice = $cart->getTotalPrice();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $inputCode = $form->get('couponCode')->getData();
 
             if ($actie == $inputCode){
-                $finalPrice = $totalPrice * 0.85;
+                $finalPrice = $totalPrice * 0.80;
             } else {
                 $this->addFlash('warning', 'Kortingscode is niet geldig!');
                 return $this->redirectToRoute('user_order_payment');
@@ -88,5 +85,6 @@ class CartController extends AbstractController
         return $this->render('bestellen/index.html.twig', [
             'actie' => $actie, 'finalPrice' => $finalPrice ,'order' => $items, 'amount_array' => $orderItemQuantity, 'form' => $form->createView()
         ]);
+
     }
 }
