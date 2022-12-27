@@ -33,8 +33,8 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column]
-    private ?int $total_price = null;
+    #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
+    private ?float $total_price = null;
 
     /**
      * An order that is in progress, not placed yet.
@@ -169,12 +169,12 @@ class Order
         return $this;
     }
 
-    public function getTotalPrice(): ?int
+    public function getTotalPrice(): ?float
     {
         return $this->total_price;
     }
 
-    public function setTotalPrice(int $total_price): self
+    public function setTotalPrice(float $total_price): self
     {
         $this->total_price = $total_price;
 
