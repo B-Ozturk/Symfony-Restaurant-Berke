@@ -4,6 +4,11 @@
 
 {% block body %}
     <div class="container mt-4">
+        {% if cart.discount %}
+            <div class="alert alert-warning text-center" role="alert">
+                <strong>Korting is toegepast!</strong>
+            </div>
+        {% endif %}
         <div class="alert alert-primary text-center" role="alert">
             <strong>Winkelwagen</strong>
         </div>
@@ -57,7 +62,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between">
                                 <div><b>Total</b></div>
-                                <span><b>€ {{ cart.total|number_format(2, '.', ',') }}</b></span>
+                                <span><b>€ {{ cart.totalPrice|number_format(2, '.', ',') }}</b></span>
                             </li>
                         </ul>
                         <div class="card-body">
