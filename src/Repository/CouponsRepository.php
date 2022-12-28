@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Coupon;
+use App\Entity\Coupons;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Coupon>
+ * @extends ServiceEntityRepository<Coupons>
  *
- * @method Coupon|null find($id, $lockMode = null, $lockVersion = null)
- * @method Coupon|null findOneBy(array $criteria, array $orderBy = null)
- * @method Coupon[]    findAll()
- * @method Coupon[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Coupons|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Coupons|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Coupons[]    findAll()
+ * @method Coupons[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CouponRepository extends ServiceEntityRepository
+class CouponsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Coupon::class);
+        parent::__construct($registry, Coupons::class);
     }
 
-    public function save(Coupon $entity, bool $flush = false): void
+    public function save(Coupons $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class CouponRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Coupon $entity, bool $flush = false): void
+    public function remove(Coupons $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class CouponRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Coupon[] Returns an array of Coupon objects
+//     * @return Coupons[] Returns an array of Coupons objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class CouponRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Coupon
+//    public function findOneBySomeField($value): ?Coupons
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

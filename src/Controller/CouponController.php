@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Coupon;
-use App\Repository\CouponRepository;
-use Doctrine\ORM\EntityManager;
+use App\Entity\DiscountSeason;
+use App\Repository\DiscountSeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,17 +12,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CouponController extends AbstractController
 {
-    #[Route('/coupon', name: 'app_coupon')]
-    public function index( EntityManagerInterface $entityManager): Response
+    #[Route('/code', name: 'app_coupon')]
+    public function index(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeason): Response
     {
+        $discountSeasons = $discountSeason->findAll();
+        $curDate = date("Y-m-d");
 
-        return $this->render('coupon/showProfile.html.twig', [
+        foreach ($discountSeasons as $season){
+            if ($season === $curDate){
+                var_dump("YES");
+            }
+        }
+
+        return $this->render('coupon/index.html.twig', [
             'controller_name' => 'CouponController',
         ]);
     }
 
-    #[Route('/coupon', name: 'app_coupon')]
-    public function notIndex( EntityManagerInterface $entityManager): Response
+    #[Route('/coupon2', name: 'app_coupon2')]
+    public function notIndex(EntityManagerInterface $entityManager): Response
     {
         $coupon = new Coupon();
 
@@ -40,7 +48,7 @@ class CouponController extends AbstractController
         $entityManager->flush();
 
 
-        return $this->render('coupon/showProfile.html.twig', [
+        return $this->render('coupon/index.html.twig', [
             'controller_name' => 'CouponController',
         ]);
     }
