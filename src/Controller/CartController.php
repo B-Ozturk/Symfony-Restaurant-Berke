@@ -6,6 +6,7 @@ use App\Entity\OrderItem;
 use App\Form\CartType;
 use App\Form\PaymentFormType;
 use App\Manager\CartManager;
+use App\Repository\CouponRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,10 +51,10 @@ class CartController extends AbstractController
     }
 
     #[Route('/order/payment', name:'order_payment')]
-    public function userOrderPayment(CartManager $cartManager, OrderItemRepository $orderItemRepository ,Request $request, EntityManagerInterface $entityManager): Response
+    public function userOrderPayment(CartManager $cartManager, OrderItemRepository $orderItemRepository , CouponRepository $couponRepository,Request $request, EntityManagerInterface $entityManager): Response
     {
         // Discount coupons are being declared here
-        $actie = 'BERKE20'; // This is the discountcode
+        $actieCodes = $couponRepository->findAll();
 
         // Form is being declared here
         $form = $this->createForm(PaymentFormType::class);
@@ -66,19 +67,20 @@ class CartController extends AbstractController
 
         // Total price is being declared here
         $totalPrice = $cart->getTotalPrice();
+        $finalPrice = $totalPrice;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $inputCode = $form->get('couponCode')->getData();
 
             if ($cart->isDiscount() === false){
-                if ($actie == $inputCode){
-                    $finalPrice = $totalPrice * 0.80;
-                    $cart->setTotalPrice($finalPrice);
-                    $cart->setDiscount(true);
-                    $entityManager->flush();
-                } else {
-                    $this->addFlash('warning', 'Kortingscode is niet geldig!');
-                    return $this->redirectToRoute('user_order_payment');
+                foreach ($actieCodes as $actieCode){
+                    if ($actieCode->getCode() == $inputCode){
+                        $discount = (100 - $actieCode->getDiscount()) / 100;
+                        $finalPrice = $totalPrice * $discount;
+                        $cart->setTotalPrice($finalPrice);
+                        $cart->setDiscount(true);
+                        $entityManager->flush();
+                    }
                 }
             } elseif ($cart->isDiscount() === true){
                 $this->addFlash('warning', 'Je kan maar 1x korting toepassen!');
@@ -89,7 +91,7 @@ class CartController extends AbstractController
         }
 
         return $this->render('bestellen/index.html.twig', [
-            'actie' => $actie, 'finalPrice' => $finalPrice ,'order' => $items, 'amount_array' => $orderItemQuantity, 'form' => $form->createView()
+            'finalPrice' => $finalPrice ,'order' => $items, 'amount_array' => $orderItemQuantity, 'form' => $form->createView()
         ]);
     }
 
