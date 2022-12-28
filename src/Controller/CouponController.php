@@ -9,18 +9,34 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class CouponController extends AbstractController
 {
-    #[Route('/code', name: 'app_coupon')]
-    public function index(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeason): Response
+    #[Route('/coupon', name: 'create_coupon')]
+    public function index(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeasonRepository): Response
     {
-        $discountSeasons = $discountSeason->findAll();
+        $discountSeasons = $discountSeasonRepository->findAll();
         $curDate = date("Y-m-d");
 
-        foreach ($discountSeasons as $season){
-            if ($season === $curDate){
-                var_dump("YES");
+        foreach ($discountSeasons as $discountSeason){
+            if ($discountSeason = $curDate){
+                $coupon = new Coupon();
+
+                $length = 6;
+                $word = array_merge(range('A', 'Z'));
+                shuffle($word);
+                $discount = rand(5, 75);
+                $code = substr(implode($word), 0, $length) . strval($discount);
+
+                $coupon->setCode($code);
+                $coupon->setDiscount($discount);
+                $coupon->setCreatedAt(new \DateTimeImmutable());
+
+                $entityManager->persist($coupon);
+                $entityManager->flush();
+            }else{
+                echo "No coupon created";
             }
         }
 
@@ -29,24 +45,20 @@ class CouponController extends AbstractController
         ]);
     }
 
-    #[Route('/coupon2', name: 'app_coupon2')]
-    public function notIndex(EntityManagerInterface $entityManager): Response
+    #[Route('/deletecoupon', name: 'delete_coupon')]
+    public function notIndex(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeasonRepository): Response
     {
-        $coupon = new Coupon();
+        $dates = $discountSeasonRepository->findAll();
 
-        $length = 6;
-        $word = array_merge(range('A', 'Z'));
-        shuffle($word);
-        $discount = rand(5, 75);
-        $code = substr(implode($word), 0, $length) . strval($discount);
+        foreach ($dates as $date){
 
-        $coupon->setCode($code);
-        $coupon->setDiscount($discount);
-        $coupon->setCreatedAt(new \DateTimeImmutable());
+//            $day = $date->getDate();
 
-        $entityManager->persist($coupon);
-        $entityManager->flush();
+            $day = date("Y/m/d", strtotime($date->getDate()));
 
+            date_sub($day,date_interval_create_from_date_string("7 days"));
+            echo date_format($date,"Y-m-d");
+        }
 
         return $this->render('coupon/index.html.twig', [
             'controller_name' => 'CouponController',
