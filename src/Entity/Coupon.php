@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CouponRepository;
+use App\Repository\CouponsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CouponRepository::class)]
+#[ORM\Entity(repositoryClass: CouponsRepository::class)]
 class Coupon
 {
     #[ORM\Id]
