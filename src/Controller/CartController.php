@@ -6,7 +6,7 @@ use App\Entity\OrderItem;
 use App\Form\CartType;
 use App\Form\PaymentFormType;
 use App\Manager\CartManager;
-use App\Repository\CouponRepository;
+use App\Repository\CouponsRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,10 +51,10 @@ class CartController extends AbstractController
     }
 
     #[Route('/order/payment', name:'order_payment')]
-    public function userOrderPayment(CartManager $cartManager, OrderItemRepository $orderItemRepository , CouponRepository $couponRepository,Request $request, EntityManagerInterface $entityManager): Response
+    public function userOrderPayment(CartManager $cartManager, OrderItemRepository $orderItemRepository , CouponsRepository $couponsRepository,Request $request, EntityManagerInterface $entityManager): Response
     {
         // Discount coupons are being declared here
-        $actieCodes = $couponRepository->findAll();
+        $actieCodes = $couponsRepository->findAll();
 
         // Form is being declared here
         $form = $this->createForm(PaymentFormType::class);
