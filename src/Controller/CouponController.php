@@ -3,13 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Coupon;
-use App\Entity\DiscountSeason;
 use App\Repository\DiscountSeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class CouponController extends AbstractController
 {
@@ -20,7 +18,7 @@ class CouponController extends AbstractController
         $curDate = date("Y-m-d");
 
         foreach ($discountSeasons as $discountSeason){
-            if ($discountSeason = $curDate){
+            if (date_format($discountSeason->getDate(), "Y-m-d") == $curDate){
                 $coupon = new Coupon();
 
                 $length = 6;
@@ -35,8 +33,9 @@ class CouponController extends AbstractController
 
                 $entityManager->persist($coupon);
                 $entityManager->flush();
-            }else{
-                echo "No coupon created";
+
+                echo "Coupon created 1" . "<br>";
+                dd($coupon);
             }
         }
 
@@ -52,12 +51,14 @@ class CouponController extends AbstractController
 
         foreach ($dates as $date){
 
-//            $day = $date->getDate();
+//            $day = date_format($date->getDate(), "Y-m-d");
+            $day = $date->getDate();
 
-            $day = date("Y/m/d", strtotime($date->getDate()));
+            $day = $day->format('Y-m-d H:i:s');
 
-            date_sub($day,date_interval_create_from_date_string("7 days"));
-            echo date_format($date,"Y-m-d");
+            $diff = date_sub($day,date_interval_create_from_date_string("40 days"));
+
+            echo $diff . "<br>";
         }
 
         return $this->render('coupon/index.html.twig', [
