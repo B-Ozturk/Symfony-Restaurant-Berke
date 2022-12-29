@@ -6,6 +6,7 @@ use App\Entity\Coupon;
 use App\Form\PaymentFormType;
 use App\Repository\CouponsRepository;
 use App\Repository\DiscountSeasonRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,9 +49,9 @@ class CouponController extends AbstractController
     }
 
     #[Route('/deletecoupon', name: 'delete_coupon')]
-    public function notIndex(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeasonRepository, CouponsRepository $couponsRepository): Response
+    public function notIndex(EntityManagerInterface $entityManagerInterface, DiscountSeasonRepository $discountSeasonRepository, CouponsRepository $couponsRepository): Response
     {
-        $conn = $this->getEntityManager()->getConnection();
+        $conn = $this->getDoctrine()->getManager();
         $dates = $discountSeasonRepository->findAll();
 
         foreach ($dates as $date){
@@ -65,6 +66,13 @@ class CouponController extends AbstractController
 
             if($formattedcheckDate === $formatteddiscountDate) {
                 $coupons = $couponsRepository->findBy(['created_at' => $discountDate],[]);
+
+                $sql = "SELECT * FROM coupon WHERE created_at LIKE '$discountDate%'";
+                $stmt = $conn->prepare($sql);
+                $resultSet = $stmt->executeQuery();
+
+                dd($resultSet);
+
                 var_dump($coupons);
                 echo "<br>";
             } else {
