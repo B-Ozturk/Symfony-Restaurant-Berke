@@ -50,15 +50,9 @@ class CouponController extends AbstractController
         $dates = $discountSeasonRepository->findAll();
 
         foreach ($dates as $date){
-
-//            $day = date_format($date->getDate(), "Y-m-d");
             $day = $date->getDate();
+            $checkDate = date_sub($day,date_interval_create_from_date_string("7 days"));
 
-            $day = $day->format('Y-m-d H:i:s');
-
-            $diff = date_sub($day,date_interval_create_from_date_string("40 days"));
-
-            echo $diff . "<br>";
         }
 
         return $this->render('coupon/index.html.twig', [
