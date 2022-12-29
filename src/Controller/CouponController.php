@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Coupon;
+use App\Form\PaymentFormType;
 use App\Repository\DiscountSeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class CouponController extends AbstractController
 {
@@ -50,8 +52,21 @@ class CouponController extends AbstractController
         $dates = $discountSeasonRepository->findAll();
 
         foreach ($dates as $date){
-            $day = $date->getDate();
-            $checkDate = date_sub($day,date_interval_create_from_date_string("7 days"));
+            $discountDate = $date->getDate();
+
+            $today = new \DateTime();
+
+            $checkDate = date_sub($today,date_interval_create_from_date_string("7 days"));
+
+
+            if($checkDate === $discountDate) {
+                echo "YESSSS!";echo  "<br>";
+            } else {
+                echo "NIET VERWIJDEREN";echo  "<br>";
+            }
+
+//            var_dump($checkDate);
+//            echo  "<br><br>";
 
         }
 
