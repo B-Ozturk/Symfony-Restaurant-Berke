@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coupon;
 use App\Form\PaymentFormType;
+use App\Repository\CouponsRepository;
 use App\Repository\DiscountSeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +37,7 @@ class CouponController extends AbstractController
                 $entityManager->persist($coupon);
                 $entityManager->flush();
 
-                echo "Coupon created 1" . "<br>";
+                echo "Coupon created!" . "<br>";
                 dd($coupon);
             }
         }
@@ -47,8 +48,9 @@ class CouponController extends AbstractController
     }
 
     #[Route('/deletecoupon', name: 'delete_coupon')]
-    public function notIndex(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeasonRepository): Response
+    public function notIndex(EntityManagerInterface $entityManager, DiscountSeasonRepository $discountSeasonRepository, CouponsRepository $couponsRepository): Response
     {
+        $conn = $this->getEntityManager()->getConnection();
         $dates = $discountSeasonRepository->findAll();
 
         foreach ($dates as $date){
@@ -58,16 +60,16 @@ class CouponController extends AbstractController
 
             $checkDate = date_sub($today,date_interval_create_from_date_string("7 days"));
 
+            $formattedcheckDate = date_format($checkDate,"Y-m-d");
+            $formatteddiscountDate = date_format($discountDate, "Y-m-d");
 
-            if($checkDate === $discountDate) {
-                echo "YESSSS!";echo  "<br>";
+            if($formattedcheckDate === $formatteddiscountDate) {
+                $coupons = $couponsRepository->findBy(['created_at' => $discountDate],[]);
+                var_dump($coupons);
+                echo "<br>";
             } else {
-                echo "NIET VERWIJDEREN";echo  "<br>";
+//                echo "NIET VERWIJDEREN";echo  "<br>";
             }
-
-//            var_dump($checkDate);
-//            echo  "<br><br>";
-
         }
 
         return $this->render('coupon/index.html.twig', [
