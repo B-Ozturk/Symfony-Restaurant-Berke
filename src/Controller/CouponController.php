@@ -54,10 +54,10 @@ class CouponController extends AbstractController
                             ): Response
     {
 
-       for ($i = 0; $i < 24; $i++){
+       for ($i = 1; $i < 3; $i++){
 //           code
            echo "test<br>";
-           
+
            sleep(60);
        }
 
