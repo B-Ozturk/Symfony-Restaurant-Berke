@@ -54,12 +54,39 @@ class CouponController extends AbstractController
                             ): Response
     {
 
-       for ($i = 1; $i < 3; $i++){
-//           code
-           echo "test<br>";
+        $dates = $discountSeasonRepository->findAll();
 
-           sleep(60);
-       }
+        foreach ($dates as $date){
+            $discountDate = $date->getDate();
+
+            $today = new \DateTime();
+
+            $checkDate = date_sub($today,date_interval_create_from_date_string("7 days"));
+
+            $formattedcheckDate = date_format($checkDate,"Y-m-d");
+            $formatteddiscountDate = date_format($discountDate, "Y-m-d");
+
+
+            if($formattedcheckDate >= $formatteddiscountDate) {
+                $coupons = $couponsRepository->createQueryBuilder('c')
+                    ->andWhere('c.created_at LIKE :date')
+                    ->setParameter('date', "%$formatteddiscountDate%")
+                    ->getQuery()
+                ->getResult();
+
+                foreach ($coupons as $coupon){
+                    var_dump($coupon);
+                    echo "<br><br>";
+
+                    $entityManagerInterface->remove($coupon);
+                    $entityManagerInterface->flush();
+                    echo "VERWIJDERD<br><br><br>";
+                }
+
+            } else {
+                echo "NIKS TE VERWIJDEREN";echo  "<br>";
+            }
+        }
 
         return $this->render('coupon/index.html.twig', [
             'controller_name' => 'CouponController',
