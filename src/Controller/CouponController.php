@@ -3,15 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Coupon;
-use App\Form\PaymentFormType;
 use App\Repository\CouponsRepository;
 use App\Repository\DiscountSeasonRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Statement;
 
 class CouponController extends AbstractController
 {
@@ -49,9 +48,12 @@ class CouponController extends AbstractController
     }
 
     #[Route('/deletecoupon', name: 'delete_coupon')]
-    public function notIndex(EntityManagerInterface $entityManagerInterface, DiscountSeasonRepository $discountSeasonRepository, CouponsRepository $couponsRepository): Response
+    public function notIndex(EntityManagerInterface $entityManagerInterface,
+                             DiscountSeasonRepository $discountSeasonRepository,
+                             CouponsRepository $couponsRepository, Connection $connection,
+                            ): Response
     {
-        $conn = $this->getDoctrine()->getManager();
+
         $dates = $discountSeasonRepository->findAll();
 
         foreach ($dates as $date){
@@ -64,17 +66,23 @@ class CouponController extends AbstractController
             $formattedcheckDate = date_format($checkDate,"Y-m-d");
             $formatteddiscountDate = date_format($discountDate, "Y-m-d");
 
-            if($formattedcheckDate === $formatteddiscountDate) {
-                $coupons = $couponsRepository->findBy(['created_at' => $discountDate],[]);
 
-                $sql = "SELECT * FROM coupon WHERE created_at LIKE '$discountDate%'";
-                $stmt = $conn->prepare($sql);
-                $resultSet = $stmt->executeQuery();
+            if($formattedcheckDate >= $formatteddiscountDate) {
+                $coupons = $couponsRepository->createQueryBuilder('c')
+                    ->andWhere('c.created_at LIKE :date')
+                    ->setParameter('date', "%$formatteddiscountDate%")
+                    ->getQuery()
+                ->getResult();
 
-                dd($resultSet);
+                foreach ($coupons as $coupon){
+                    var_dump($coupon);
+                    echo "<br><br>";
 
-                var_dump($coupons);
-                echo "<br>";
+                    $entityManagerInterface->remove($coupon);
+                    $entityManagerInterface->flush();
+                    echo "VERWIJDERD<br><br><br>";
+                }
+
             } else {
 //                echo "NIET VERWIJDEREN";echo  "<br>";
             }
