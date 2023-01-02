@@ -1,0 +1,1 @@
+console.warn("Javscript werkt op iedere pagina")
