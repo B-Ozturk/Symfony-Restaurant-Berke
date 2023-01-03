@@ -6,14 +6,14 @@ use App\Entity\Coupon;
 use App\Repository\CouponsRepository;
 use App\Repository\DiscountSeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class CouponService
 {
-    public function __construct(private EntityManagerInterface $entityManagerInterface,private DiscountSeasonRepository $discountSeasonRepository, private CouponsRepository $couponsRepository)
-    {
-
-    }
+    public function __construct(
+        private EntityManagerInterface $entityManagerInterface,
+        private DiscountSeasonRepository $discountSeasonRepository,
+        private CouponsRepository $couponsRepository
+    ){}
 
     public function makeCoupon()
     {
