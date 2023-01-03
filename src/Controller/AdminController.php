@@ -30,6 +30,7 @@ class AdminController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(OpeningstijdenRepository $openingstijdenRepository, CouponService $couponService): Response
     {
+        $couponService->makeCoupon();
         $couponService->checkCoupon();
 
         $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
