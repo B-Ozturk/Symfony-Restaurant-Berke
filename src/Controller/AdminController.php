@@ -14,6 +14,7 @@ use App\Repository\OrderRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
+use App\Service\CouponService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -27,14 +28,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/home', name: 'home')]
-    public function index(OpeningstijdenRepository $openingstijdenRepository): Response
+    public function index(OpeningstijdenRepository $openingstijdenRepository, CouponService $couponService): Response
     {
+        $couponService->checkCoupon();
+
         $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
 
         return $this->render('admin/home.html.twig', [
             'openingstijden' => $openingstijden,
         ]);
     }
+
+
 
     #[Route('/openingstijden/{id}', name: 'times')]
     public function times($id, OpeningstijdenRepository $openingstijdenRepository, Request $request, EntityManagerInterface $entityManager): Response

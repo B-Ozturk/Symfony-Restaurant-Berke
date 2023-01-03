@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Coupon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +38,15 @@ class CouponsRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findCouponsByDate($formatteddiscountDate)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.created_at LIKE :date')
+            ->setParameter('date', "%$formatteddiscountDate%")
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**
