@@ -3,14 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
-//use Doctrine\DBAL\Types\DateImmutableType;
-//use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-//use Doctrine\DBAL\Types\DateType;
-//use Doctrine\DBAL\Types\TimeType;
 use Symfony\Component\Form\AbstractType;
-//use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
