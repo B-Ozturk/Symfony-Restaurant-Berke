@@ -91,8 +91,16 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    Button to create random coupon
-                    <input type="submit" id="addButton" class="btn btn-warning text-dark border-dark" value="Generate random">
+                    <div class="symfony_review_form my-3 pb-5">
+                        {{ form_start(randomCoupon) }}
+                            <div class="form-group">
+                                <label>Random coupon code aanmaken</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" id="addButton" class="btn btn-warning text-dark border-dark" value="Generate random">
+                            </div>
+                        {{ form_end(randomCoupon) }}
+                    </div>
                 </div>
                 <div class="col-4">
                     <div class="symfony_review_form my-3">

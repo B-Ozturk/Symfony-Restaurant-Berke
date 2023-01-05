@@ -11,6 +11,7 @@ use App\Form\CouponType;
 use App\Form\DiscountSeasonType;
 use App\Form\MenuItemType;
 use App\Form\OpeningstijdenType;
+use App\Form\RandomCouponType;
 use App\Repository\MenuRepository;
 use App\Repository\OpeningstijdenRepository;
 use App\Repository\OrderItemRepository;
@@ -51,12 +52,32 @@ class AdminController extends AbstractController
             $coupon->setDiscount($formCoupon->get('discount')->getData());
             $coupon->setCreatedAt(new \DateTimeImmutable());
 
-//            dd($coupon);
-
             $entityManager->persist($coupon);
             $entityManager->flush();
 
             $this->addFlash('success', 'Discount code is succesvol aangemaakt!');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        // Random coupon code maken
+        $formRandomCoupon = $this->createForm(RandomCouponType::class, $coupon);
+
+        $formRandomCoupon->handleRequest($request);
+        if($formRandomCoupon->isSubmitted() && $formRandomCoupon->isValid()){
+            $length = 6;
+            $word = array_merge(range('A', 'Z'));
+            shuffle($word);
+            $discount = rand(5, 75);
+            $code = substr(implode($word), 0, $length) . strval($discount);
+
+            $coupon->setCode($code);
+            $coupon->setDiscount($discount);
+            $coupon->setCreatedAt(new \DateTimeImmutable());
+
+            $entityManager->persist($coupon);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Discount Season is succesvol toegevoegd!');
             return $this->redirectToRoute('admin_home');
         }
 
@@ -67,10 +88,12 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $date = date_sub($form->get('date')->getData(), date_interval_create_from_date_string("7 days"));
-            //$deleteDate = date_add($date, date_interval_create_from_date_string("7 days"));
+            $deleteDate = date_add($date,date_interval_create_from_date_string("7 days"));
+
+            dd($deleteDate);
 
             $discountSeason->setDate($date);
-            $discountSeason->setDeleteDate(date_add($date, date_interval_create_from_date_string("7 days")));
+            $discountSeason->setDeleteDate($deleteDate);
             $discountSeason->setActive(false);
 
             dd($discountSeason);
@@ -83,7 +106,7 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/home.html.twig', [
-            'openingstijden' => $openingstijden, 'discountSeason' => $form->createView(), 'customCoupon' => $formCoupon->createView(),
+            'openingstijden' => $openingstijden, 'discountSeason' => $form->createView(), 'customCoupon' => $formCoupon->createView(), 'randomCoupon' => $formRandomCoupon->createView()
         ]);
     }
 
