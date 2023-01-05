@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Coupon;
 use App\Entity\DiscountSeason;
 use App\Entity\Menu;
 use App\Entity\Openingstijden;
 use App\Entity\Order;
+use App\Form\CouponType;
 use App\Form\DiscountSeasonType;
 use App\Form\MenuItemType;
 use App\Form\OpeningstijdenType;
@@ -32,21 +34,46 @@ class AdminController extends AbstractController
     #[Route('/home', name: 'home')]
     public function index(OpeningstijdenRepository $openingstijdenRepository, CouponService $couponService, Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Checks die worden uitgevoerd bij het bezoeken van de homepagina
         $couponService->makeCoupon();
         $couponService->checkCoupon();
 
+        // Openingstijden tabel
+        $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
+
+        // Handmatig Coupon code aanmaken
+        $coupon = new Coupon();
+        $formCoupon = $this->createForm(CouponType::class, $coupon);
+
+        $formCoupon->handleRequest($request);
+        if($formCoupon->isSubmitted() && $formCoupon->isValid()){
+            $coupon->setCode($formCoupon->get('code')->getData());
+            $coupon->setDiscount($formCoupon->get('discount')->getData());
+            $coupon->setCreatedAt(new \DateTimeImmutable());
+
+//            dd($coupon);
+
+            $entityManager->persist($coupon);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Discount code is succesvol aangemaakt!');
+            return $this->redirectToRoute('admin_home');
+        }
+
+        // Nieuwe discount season aanmaken
         $discountSeason = new DiscountSeason();
-        $form = $this->createForm(DiscountSeasonType::class, $discountSeason);
+        $form = $this->createForm(DiscountSeasonType::class);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $date = date_sub($form->get('date')->getData(), date_interval_create_from_date_string("7 days"));
-            $deleteDate = date_add($date, date_interval_create_from_date_string("7 days"));
+            //$deleteDate = date_add($date, date_interval_create_from_date_string("7 days"));
 
             $discountSeason->setDate($date);
-            $discountSeason->setDeleteDate($deleteDate);
+            $discountSeason->setDeleteDate(date_add($date, date_interval_create_from_date_string("7 days")));
             $discountSeason->setActive(false);
 
+            dd($discountSeason);
 
             $entityManager->persist($discountSeason);
             $entityManager->flush();
@@ -55,10 +82,8 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin_home');
         }
 
-        $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
-
         return $this->render('admin/home.html.twig', [
-            'openingstijden' => $openingstijden, 'discountSeason' => $form->createView(),
+            'openingstijden' => $openingstijden, 'discountSeason' => $form->createView(), 'customCoupon' => $formCoupon->createView(),
         ]);
     }
 

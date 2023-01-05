@@ -2,6 +2,14 @@
     width: 80%;
 }
 
+#coupon_code{
+    width: 80%;
+}
+
+#coupon_discount{
+    width: 80%;
+}
+
 #addButton{
     width: auto;
 }
