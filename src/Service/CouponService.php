@@ -63,8 +63,6 @@ class CouponService
                     $this->entityManagerInterface->remove($coupon);
                     $this->entityManagerInterface->flush();
                 }
-            } else {
-
             }
         }
     }
