@@ -1,3 +1,11 @@
+#discount_season_date{
+    width: 80%;
+}
+
+#addButton{
+    width: auto;
+}
+
 .add_item_button{
     margin-bottom: 10px;
 }

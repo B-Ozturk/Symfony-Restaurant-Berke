@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\DiscountSeason;
 use App\Entity\Menu;
 use App\Entity\Openingstijden;
 use App\Entity\Order;
+use App\Form\DiscountSeasonType;
 use App\Form\MenuItemType;
 use App\Form\OpeningstijdenType;
 use App\Repository\MenuRepository;
@@ -28,15 +30,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/home', name: 'home')]
-    public function index(OpeningstijdenRepository $openingstijdenRepository, CouponService $couponService): Response
+    public function index(OpeningstijdenRepository $openingstijdenRepository, CouponService $couponService, Request $request, EntityManagerInterface $entityManager): Response
     {
         $couponService->makeCoupon();
         $couponService->checkCoupon();
 
+        $discountSeason = new DiscountSeason();
+        $form = $this->createForm(DiscountSeasonType::class, $discountSeason);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $date = date_sub($form->get('date')->getData(), date_interval_create_from_date_string("7 days"));
+            $deleteDate = date_add($date, date_interval_create_from_date_string("7 days"));
+
+            $discountSeason->setDate($date);
+            $discountSeason->setDeleteDate($deleteDate);
+            $discountSeason->setActive(false);
+
+
+            $entityManager->persist($discountSeason);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Discount Season is succesvol toegevoegd!');
+            return $this->redirectToRoute('admin_home');
+        }
+
         $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
 
         return $this->render('admin/home.html.twig', [
-            'openingstijden' => $openingstijden,
+            'openingstijden' => $openingstijden, 'discountSeason' => $form->createView(),
         ]);
     }
 

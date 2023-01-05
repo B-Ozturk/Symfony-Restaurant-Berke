@@ -72,6 +72,32 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12 mb-5" id="main">
+            <div class="row">
+                <div class="col-4">
+                    Button to create random coupon
+                    <a href="#" class="btn">Random coupon aanmaken</a>
+                </div>
+                <div class="col-4">
+                    Button to create coupon
+                    <button  type="submit" class="btn"> Coupon handmatig aanmaken</button>
+                </div>
+                <div class="col-4">
+                    <div class="symfony_review_form my-3">
+                        {{ form_start(discountSeason) }}
+                            <div class="form-group">
+                                {{ form_row(discountSeason.date) }}
+                            </div>
+                        <div class="form-group">
+                            <input type="submit" id="addButton" class="btn btn-warning text-dark border-dark" value="Voeg toe">
+                        </div>
+                        {{ form_end(discountSeason) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="{{ asset('/js/weather.js') }}"></script>
     <script src="{{ asset('/js/clock.js') }}"></script>
