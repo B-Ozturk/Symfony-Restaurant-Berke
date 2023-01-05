@@ -87,16 +87,13 @@ class AdminController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $date = date_sub($form->get('date')->getData(), date_interval_create_from_date_string("7 days"));
-            $deleteDate = date_add($date,date_interval_create_from_date_string("7 days"));
-
-            dd($deleteDate);
+            $date = $form->get('date')->getData();
+            $deleteDate = clone $date;
+            $deleteDate->modify("+7 day");
 
             $discountSeason->setDate($date);
             $discountSeason->setDeleteDate($deleteDate);
             $discountSeason->setActive(false);
-
-            dd($discountSeason);
 
             $entityManager->persist($discountSeason);
             $entityManager->flush();
