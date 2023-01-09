@@ -142,7 +142,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/members', name: 'members')]
-    public function showMembers(UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function showMembers(UserRepository $userRepository): Response
     {
         $users = $userRepository->findUsersOnly();
 
