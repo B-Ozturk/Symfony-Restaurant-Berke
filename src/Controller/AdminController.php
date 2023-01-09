@@ -38,6 +38,7 @@ class AdminController extends AbstractController
         // Checks die worden uitgevoerd bij het bezoeken van de homepagina
         $couponService->makeCoupon();
         $couponService->checkCoupon();
+        $couponService->checkDiscountSeason();
 
         // Openingstijden tabel
         $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);

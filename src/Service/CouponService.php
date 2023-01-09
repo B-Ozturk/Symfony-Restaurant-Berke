@@ -25,15 +25,20 @@ class CouponService
                 if (date_format($discountSeason->getDate(), "Y-m-d") == $curDate){
                     $coupon = new Coupon();
 
+                    $today = new \DateTimeImmutable();
                     $length = 6;
                     $word = array_merge(range('A', 'Z'));
                     shuffle($word);
                     $discount = rand(5, 75);
                     $code = substr(implode($word), 0, $length) . strval($discount);
 
+                    $deleteDate = clone $today;
+                    $deleteDate->modify("+7 day");
+
                     $coupon->setCode($code);
                     $coupon->setDiscount($discount);
-                    $coupon->setCreatedAt(new \DateTimeImmutable());
+                    $coupon->setCreatedAt($today);
+                    $coupon->setDeleteDate($deleteDate);
 
                     $discountSeason->setActive(true);
 
@@ -67,5 +72,32 @@ class CouponService
         }
     }
 
+    public function checkDiscountSeason(){
+        $curDate = date("Y-m-d");
+        $today = new \DateTime();
+        $formattedCurrentDate = date_format($today, "Y-m-d");
 
+        $discountSeasons = $this->discountSeasonRepository->findDiscountSeasonByDate($formattedCurrentDate);
+
+        foreach ($discountSeasons as $discountSeason){
+//                            var_dump("TEST");
+//                echo "<br><br><br>";
+
+            $formattedDeleteDate = date_format($discountSeason->getDeleteDate(), "Y-m-d");
+
+
+
+//                dd($formattedDeleteDate, $formattedCurrentDate);
+
+
+
+
+            if ($formattedDeleteDate == $formattedCurrentDate){
+                dd("YES VERWIJDEREN");
+            }else{
+                var_dump("TEST");
+                echo "<br><br><br>";
+            }
+        }
+    }
 }

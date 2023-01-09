@@ -39,6 +39,15 @@ class DiscountSeasonRepository extends ServiceEntityRepository
         }
     }
 
+    public function findDiscountSeasonByDate($formattedCurrentDate)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.delete_date LIKE :date')
+            ->setParameter('date', "%$formattedCurrentDate%")
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return DiscountSeason[] Returns an array of DiscountSeason objects
 //     */
