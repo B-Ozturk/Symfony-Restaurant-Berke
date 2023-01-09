@@ -130,7 +130,6 @@ class AdminController extends AbstractController
             $openingstijden->setDay($day->getDay());
             $openingstijden->setstartTime($form->get('startTime')->getData());
             $openingstijden->setendTime($form->get('endTime')->getData());
-//            $entityManager->persist($openingstijden);
             $entityManager->flush();
 
             $this->addFlash('success', 'Openingstijden zijn succesvol gewijzigd!');
