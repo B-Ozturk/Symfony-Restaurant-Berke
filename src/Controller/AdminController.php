@@ -49,14 +49,18 @@ class AdminController extends AbstractController
 
         $formCoupon->handleRequest($request);
         if($formCoupon->isSubmitted() && $formCoupon->isValid()){
+            $today = new \DateTimeImmutable();
+            $deleteDate = clone $today;
+
             $coupon->setCode($formCoupon->get('code')->getData());
             $coupon->setDiscount($formCoupon->get('discount')->getData());
             $coupon->setCreatedAt(new \DateTimeImmutable());
+            $coupon->setDeleteDate($deleteDate->modify("+7 day"));
 
             $entityManager->persist($coupon);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Discount code is succesvol aangemaakt!');
+            $this->addFlash('success', 'Coupon code is succesvol aangemaakt!');
             return $this->redirectToRoute('admin_home');
         }
 
@@ -71,14 +75,18 @@ class AdminController extends AbstractController
             $discount = rand(5, 75);
             $code = substr(implode($word), 0, $length) . strval($discount);
 
+            $today = new \DateTimeImmutable();
+            $deleteDate = clone $today;
+
             $coupon->setCode($code);
             $coupon->setDiscount($discount);
             $coupon->setCreatedAt(new \DateTimeImmutable());
+            $coupon->setDeleteDate($deleteDate->modify("+7 day"));
 
             $entityManager->persist($coupon);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Discount Season is succesvol toegevoegd!');
+            $this->addFlash('success', 'Random coupon code is succesvol toegevoegd!');
             return $this->redirectToRoute('admin_home');
         }
 
@@ -90,10 +98,9 @@ class AdminController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $date = $form->get('date')->getData();
             $deleteDate = clone $date;
-            $deleteDate->modify("+7 day");
 
             $discountSeason->setDate($date);
-            $discountSeason->setDeleteDate($deleteDate);
+            $discountSeason->setDeleteDate($deleteDate->modify("+7 day"));
             $discountSeason->setActive(false);
 
             $entityManager->persist($discountSeason);

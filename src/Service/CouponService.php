@@ -73,27 +73,18 @@ class CouponService
     }
 
     public function checkDiscountSeason(){
-        $curDate = date("Y-m-d");
         $today = new \DateTime();
         $formattedCurrentDate = date_format($today, "Y-m-d");
 
         $discountSeasons = $this->discountSeasonRepository->findDiscountSeasonByDate($formattedCurrentDate);
 
         foreach ($discountSeasons as $discountSeason){
-//                            var_dump("TEST");
-//                echo "<br><br><br>";
 
             $formattedDeleteDate = date_format($discountSeason->getDeleteDate(), "Y-m-d");
 
-
-
-//                dd($formattedDeleteDate, $formattedCurrentDate);
-
-
-
-
             if ($formattedDeleteDate == $formattedCurrentDate){
-                dd("YES VERWIJDEREN");
+                $this->entityManagerInterface->remove($discountSeason);
+                $this->entityManagerInterface->flush();
             }else{
                 var_dump("TEST");
                 echo "<br><br><br>";
