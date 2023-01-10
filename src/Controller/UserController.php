@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
+use App\Repository\CouponsRepository;
 use App\Repository\OpeningstijdenRepository;
 use App\Repository\OrderItemRepository;
 use App\Repository\OrderRepository;
@@ -26,12 +27,27 @@ class UserController extends AbstractController
 {
 //  User home page
     #[Route('/home', name: 'home')]
-    public function userHome(OpeningstijdenRepository $openingstijdenRepository): Response
+    public function userHome(OpeningstijdenRepository $openingstijdenRepository, CouponsRepository $couponsRepository): Response
     {
+        $coupons = $couponsRepository->findAll();
+        $arrayCodes = array();
+
+        foreach ($coupons as $coupon){
+            $couponCode = $coupon->getCode();
+            array_push($arrayCodes, $couponCode);
+        }
+
+        $randomCode = $arrayCodes[array_rand($arrayCodes, 1)];
+
+        $code = $couponsRepository->findOneBy(['code' => $randomCode]);
+        $discount = $code->getDiscount();
+
+
+
         $openingstijden = $openingstijdenRepository->findBy([],['id' => 'ASC']);
 
         return $this->render('user/home.html.twig', [
-            'openingstijden' => $openingstijden,
+            'openingstijden' => $openingstijden, 'randomCode' => $randomCode, 'discount' => $discount,
         ]);
     }
 
