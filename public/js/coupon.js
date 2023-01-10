@@ -1,10 +1,12 @@
-// console.warn("Javscript werkt op iedere pagina");
+var mysql = require('mysql');
 
-var now = new Date();
-var delay = 60 * 60 * 1000; // 1 hour in msec
-var start = delay - (now.getMinutes() * 60 + now.getSeconds()) * 1000 + now.getMilliseconds();
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "berke",
+    password: "berke"
+});
 
-setTimeout(function doSomething() {
-    console.warn("uurtje factuurtje")
-    setTimeout(doSomething, delay);
-}, start);
+con.query("SELECT * FROM coupon", function (err, result, fields) {
+    if (err) throw err;
+    console.warn(result);
+});
