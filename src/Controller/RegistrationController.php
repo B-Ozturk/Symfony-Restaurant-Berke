@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Coupon;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -27,7 +29,11 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(Request $request,
+                             UserPasswordHasherInterface $userPasswordHasher,
+                             UserAuthenticatorInterface $userAuthenticator,
+                             LoginAuthenticator $authenticator,
+                             EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -48,6 +54,24 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // Generate a discount code
+            $coupon = new Coupon();
+
+            $today = new \DateTimeImmutable();
+            $deleteDate = clone $today;
+            $deleteDate = $deleteDate->modify("+1 day");
+
+            $length = 4;
+            $word = array_merge(range('A', 'Z'));
+            shuffle($word);
+            $discount = 10;
+            $code = substr(implode($word), 0, $length) . strval($discount);
+
+            $coupon->setCode($code);
+            $coupon->setDiscount($discount);
+            $coupon->setCreatedAt($today);
+            $coupon->setDeleteDate($deleteDate);
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
@@ -55,10 +79,16 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-//                    ->embedFromPath('logo1.jpg', 'footer-signature', 'image/gif')
-//                    ->html('<div background="cid:footer-signature"></div>')
             );
             // do anything else you need here, like send an email
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('bko_website@outlook.com', 'Restaurant | Berke'))
+                    ->to($user->getEmail())
+                    ->subject('Welcome to the club!')
+                    ->html('<h3>All new members get a 10% discount code for all of their orders in the next 24 hours!!</h3><br>
+                                 <h5>Get '. $discount .'% off with '. $code .', code is available for 24 hours</h5>')
+            );
 
             return $userAuthenticator->authenticateUser(
                 $user,
