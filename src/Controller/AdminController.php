@@ -11,6 +11,7 @@ use App\Form\CouponType;
 use App\Form\DiscountSeasonType;
 use App\Form\MenuItemType;
 use App\Form\OpeningstijdenType;
+use App\Security\EmailVerifier;
 use App\Form\RandomCouponType;
 use App\Repository\MenuRepository;
 use App\Repository\OpeningstijdenRepository;
@@ -21,20 +22,34 @@ use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use App\Service\CouponService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 #[Route('/admin', name: 'admin_')]
 class AdminController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
-    public function index(OpeningstijdenRepository $openingstijdenRepository, CouponService $couponService, Request $request, EntityManagerInterface $entityManager): Response
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
     {
+        $this->emailVerifier = $emailVerifier;
+    }
+    
+    #[Route('/home', name: 'home')]
+    public function index(OpeningstijdenRepository $openingstijdenRepository,
+                          CouponService $couponService, Request $request,
+                          EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    {
+        // All members
+        $users = $userRepository->findUsersOnly();
+
         // Checks die worden uitgevoerd bij het bezoeken van de homepagina
         $couponService->makeCoupon();
         $couponService->checkCoupon();
@@ -59,6 +74,17 @@ class AdminController extends AbstractController
 
             $entityManager->persist($coupon);
             $entityManager->flush();
+
+            foreach ($users as $user){
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('bko_website@outlook.com', 'Restaurant | Berke'))
+                        ->to($user->getEmail())
+                        ->subject('ITS DISCO(UNT) TIME!')
+                        ->html('
+                    <h5>Get '. $formCoupon->get('discount')->getData() .'% off with '. $formCoupon->get('code')->getData() .'</h5>')
+                );
+            }
 
             $this->addFlash('success', 'Coupon code is succesvol aangemaakt!');
             return $this->redirectToRoute('admin_home');
@@ -85,6 +111,17 @@ class AdminController extends AbstractController
 
             $entityManager->persist($coupon);
             $entityManager->flush();
+
+            foreach ($users as $user){
+                $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                    (new TemplatedEmail())
+                        ->from(new Address('bko_website@outlook.com', 'Restaurant | Berke'))
+                        ->to($user->getEmail())
+                        ->subject('ITS DISCO(UNT) TIME!')
+                        ->html('
+                    <h5>Get '. $discount .'% off with '. $code .'</h5>')
+                );
+            }
 
             $this->addFlash('success', 'Random coupon code is succesvol toegevoegd!');
             return $this->redirectToRoute('admin_home');
