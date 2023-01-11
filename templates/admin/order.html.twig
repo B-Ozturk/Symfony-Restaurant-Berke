@@ -16,10 +16,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% set price =0 %}
                     {% if order.items|length != 0 %}
                     {% set number= 1 %}
-                    {% set total=0 %}
                     {% set counter= 0 %}
                     {% for item in order.items %}
                         <tr>
@@ -30,9 +28,7 @@
                             <th>{{amount_array[counter]}}</th>
                             <th>&euro; {{ (item.product.price * amount_array[counter])|number_format(2, '.', ',')}}</th>
                         </tr>
-                    {%  set price = price + (item.product.price * amount_array[counter])|number_format(2, '.', ',')%}
                     {%  set counter= counter+1 %}
-                    {% set total = total + price %}
                     {% set number= number+1 %}
                     {% endfor %}
                     {% endif %}
@@ -42,7 +38,7 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th>&euro; {{ price|number_format(2, '.', ',') }}</th>
+                        <th>&euro; {{ order.totalPrice|number_format(2, '.', ',') }}</th>
                     </tr>
                     </tbody>
                 </table>
