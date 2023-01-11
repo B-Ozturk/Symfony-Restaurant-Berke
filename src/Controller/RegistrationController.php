@@ -72,6 +72,9 @@ class RegistrationController extends AbstractController
             $coupon->setCreatedAt($today);
             $coupon->setDeleteDate($deleteDate);
 
+            $entityManager->persist($coupon);
+            $entityManager->flush();
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
