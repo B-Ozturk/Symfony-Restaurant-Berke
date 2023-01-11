@@ -116,8 +116,11 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $picture = $user->getPicture();
-        $projectDir = $this->getParameter('kernel.project_dir');
-        $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+
+        if ($picture != 'defaultProfile.png'){
+            $projectDir = $this->getParameter('kernel.project_dir');
+            $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+        }
 
 
         $user->setPicture('defaultProfile.png');
@@ -205,8 +208,10 @@ class UserController extends AbstractController
         $reservations = $reservationRepository->findBy(['user' => $user]);
 
         $picture = $user->getPicture();
-        $projectDir = $this->getParameter('kernel.project_dir');
-        $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+        if ($picture != 'defaultProfile.png'){
+            $projectDir = $this->getParameter('kernel.project_dir');
+            $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+        }
 
         if ($reviews){
             foreach ($reviews as $rev){
