@@ -41,7 +41,7 @@ class AdminController extends AbstractController
     {
         $this->emailVerifier = $emailVerifier;
     }
-    
+
     #[Route('/home', name: 'home')]
     public function index(OpeningstijdenRepository $openingstijdenRepository,
                           CouponService $couponService, Request $request,
@@ -118,8 +118,7 @@ class AdminController extends AbstractController
                         ->from(new Address('bko_website@outlook.com', 'Restaurant | Berke'))
                         ->to($user->getEmail())
                         ->subject('ITS DISCO(UNT) TIME!')
-                        ->html('
-                    <h5>Get '. $discount .'% off with '. $code .'</h5>')
+                        ->html('<h5>Get '. $discount .'% off with '. $code .'</h5>')
                 );
             }
 
