@@ -42,6 +42,11 @@
                     </tr>
                     </tbody>
                 </table>
+                {% if order.discount %}
+                    <div class="alert alert-warning text-center" role="alert">
+                        <strong>Korting is toegepast!</strong>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
