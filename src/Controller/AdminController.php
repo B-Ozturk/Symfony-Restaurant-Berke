@@ -165,8 +165,10 @@ class AdminController extends AbstractController
         $reservations = $reservationRepository->findBy(['user' => $id]);
 
         $picture = $member->getPicture();
-        $projectDir = $this->getParameter('kernel.project_dir');
-        $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+        if ($picture != 'defaultProfile.png'){
+            $projectDir = $this->getParameter('kernel.project_dir');
+            $filesystem->remove($projectDir.'/public/img/profile/'.$picture);
+        }
 
         if ($reviews){
             foreach ($reviews as $rev){
