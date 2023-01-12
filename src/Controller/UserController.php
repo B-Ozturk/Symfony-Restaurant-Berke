@@ -11,6 +11,7 @@ use App\Repository\OrderRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
+use App\Service\CouponService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -25,10 +26,16 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 #[Route('/user', name: 'user_')]
 class UserController extends AbstractController
 {
-//  User home page
     #[Route('/home', name: 'home')]
-    public function userHome(OpeningstijdenRepository $openingstijdenRepository, CouponsRepository $couponsRepository): Response
+    public function userHome(OpeningstijdenRepository $openingstijdenRepository,
+                             CouponsRepository $couponsRepository,
+                             CouponService $couponService): Response
     {
+        // Checks die worden uitgevoerd bij het bezoeken van de homepagina
+        $couponService->makeCoupon();
+        $couponService->checkCoupon();
+        $couponService->checkDiscountSeason();
+
         $coupons = $couponsRepository->findAll();
         $arrayCodes = array();
 
